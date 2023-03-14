@@ -30,7 +30,7 @@ class AppText {
 
   static const homeButtonText = TextStyle(
       fontWeight: FontWeight.w400,
-      fontSize: 20,
+      fontSize: 16,
       fontStyle: FontStyle.normal,
       color: AppColor.primaryColor1);
 

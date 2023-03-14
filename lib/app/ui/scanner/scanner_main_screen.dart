@@ -81,12 +81,7 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
                                           data = event;
                                           List<String> content = StringSplitter.split(data!.code!, splitters: [' - ']);
                                           if (content.length == 3) {
-                                            throttle(
-                                                  () {
                                                 context.read<CheckinBloc>().add(CreateCheckinEvent(1, int.parse(content.elementAt(0)), content.elementAt(1), DateTime.parse(content.elementAt(2))));
-                                              },
-                                              const Duration(seconds: 1),
-                                            );
                                             data = null;
                                           }
                                         });
@@ -117,12 +112,7 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
                                           data = event;
                                           List<String> content = StringSplitter.split(data!.code!, splitters: [' - ']);
                                           if (content.length == 3) {
-                                            throttle(
-                                                  () {
-                                                    context.read<CheckinBloc>().add(CreateCheckinEvent(1, int.parse(content.elementAt(0)), content.elementAt(1), DateTime.parse(content.elementAt(2))));
-                                                    },
-                                              const Duration(seconds: 1),
-                                            );
+                                            context.read<CheckinBloc>().add(CreateCheckinEvent(1, int.parse(content.elementAt(0)), content.elementAt(1), DateTime.parse(content.elementAt(2))));
                                             data = null;
                                           }
                                         });
@@ -141,8 +131,8 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
                           return Column(
                             children: [
                               Container(
-                                height: 220,
-                                width: 220,
+                                height: 350,
+                                width: 270,
                                 child: QRView(
                                   key: _globalKey,
                                   onQRViewCreated: (QRViewController controller) {
@@ -152,12 +142,7 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
                                         data = event;
                                         List<String> content = StringSplitter.split(data!.code!, splitters: [' - ']);
                                         if (content.length == 3) {
-                                          throttle(
-                                                () {
-                                              context.read<CheckinBloc>().add(CreateCheckinEvent(1, int.parse(content.elementAt(0)), content.elementAt(1), DateTime.parse(content.elementAt(2))));
-                                            },
-                                            const Duration(seconds: 1),
-                                          );
+                                          context.read<CheckinBloc>().add(CreateCheckinEvent(1, int.parse(content.elementAt(0)), content.elementAt(1), DateTime.parse(content.elementAt(2))));
                                           data = null;
                                         }
                                       });
