@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
    <application
-        android:label="toiletmap_staff"
+        android:label="Toilet Staff"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
