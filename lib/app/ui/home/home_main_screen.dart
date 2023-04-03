@@ -16,25 +16,22 @@ class HomeMainScreen extends StatefulWidget {
 class _HomeMainScreenState extends State<HomeMainScreen> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20.0),
-                bottomRight: Radius.circular(20.0)),
+                bottomLeft: Radius.circular(AppSize.widthScreen /20),
+                bottomRight: Radius.circular(AppSize.widthScreen /20)),
         ),
         elevation: 0,
         titleSpacing: 0,
 
         automaticallyImplyLeading: false,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20.0),
-                bottomRight: Radius.circular(20.0)),
+                bottomLeft: Radius.circular(AppSize.widthScreen /20),
+                bottomRight: Radius.circular(AppSize.widthScreen /20)),
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -43,13 +40,14 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         ),
 
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(screenHeight/4),
+          preferredSize: Size.fromHeight(AppSize.heightScreen / 4),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 100.0,
-                height: 100.0,
+                width: AppSize.widthScreen / 3.5,
+                height: AppSize.widthScreen / 3.5,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/sample_avatar.jpg"),
@@ -62,16 +60,16 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: AppSize.heightScreen / 40,),
               Text('Nhà vệ sinh quận 1', style: AppText.titleText1,),
-              SizedBox(height: 40,),
+              SizedBox(height: AppSize.heightScreen / 15,),
             ],
           ),
         ),
       ),
       body: Container(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(AppSize.widthScreen / 20),
           child: GridView(
             children: [
               HomeMainButtonWidget(
@@ -107,7 +105,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                   },
               ),
             ],
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 20, crossAxisSpacing: 10),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: AppSize.widthScreen / 20, crossAxisSpacing: AppSize.widthScreen / 40),
           ),
         )
       )

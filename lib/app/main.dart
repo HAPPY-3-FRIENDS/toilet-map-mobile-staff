@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: "Nhà vệ sinh công cộng - Nhân viên",
       debugShowCheckedModeBanner: false,
       home: Center(child: Text('Dự án Nhà vệ sinh công cộng')),
-      initialRoute: Routes.loginMainScreen,
+      initialRoute: Routes.homeMainScreen,
       onGenerateRoute: router.Router.generateRoute,
     );
   }

@@ -12,24 +12,21 @@ class HomeMainButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return InkWell(
       onTap: () => function(),
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(AppSize.widthScreen / 40),
         decoration: BoxDecoration(
           color: AppColor.primaryColor2,
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(AppSize.widthScreen / 40),
           boxShadow: [
-            BoxShadow(offset: Offset(0.0, 10.0), blurRadius: 10.0, color: Colors.black12),
+            BoxShadow(offset: Offset(0.0, 5.0), blurRadius: 5.0, color: Colors.black12),
           ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(icon,size: screenWidth/4, color: AppColor.primaryColor1),
+            Icon(icon,size: AppSize.widthScreen / 4, color: AppColor.primaryColor1),
             Text(text, style: AppText.homeButtonText,)
           ],
         ),

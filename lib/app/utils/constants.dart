@@ -32,15 +32,15 @@ class AppText {
       fontStyle: FontStyle.normal,
       color: AppColor.primaryColor1);
 
-  static const titleText1 = TextStyle(
+  static var titleText1 = TextStyle(
       fontWeight: FontWeight.w400,
-      fontSize: 24,
+      fontSize: AppSize.heightScreen / 30,
       fontStyle: FontStyle.normal,
       color: Colors.white);
 
-  static const homeButtonText = TextStyle(
+  static var homeButtonText = TextStyle(
       fontWeight: FontWeight.w400,
-      fontSize: 16,
+      fontSize: AppSize.heightScreen / 35,
       fontStyle: FontStyle.normal,
       color: AppColor.primaryColor1);
 
