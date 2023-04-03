@@ -4,6 +4,16 @@ class UIConstant {
   static const String appName = "Toilet Map - Nhà Vệ Sinh Công Cộng";
 }
 
+class AppSize {
+  static double heightScreen = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
+  static double widthScreen = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width;
+}
+
+class AppDomain {
+  static const String appDomain1 = 'https://toilet-map.azurewebsites.net';
+  static const String appDomain2 = 'https://toiletmap.azurewebsites.net';
+}
+
 class AppColor {
   static const Color primaryColor1 = Color(0xFF0B79D9);
   static const Color primaryColor2 = Color(0xFFD8E9F9);
@@ -34,4 +44,23 @@ class AppText {
       fontStyle: FontStyle.normal,
       color: AppColor.primaryColor1);
 
+}
+
+class AppShapeBorder {
+  static var shapeBorder1 =  RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+          bottomLeft: Radius.elliptical(AppSize.heightScreen / 1.5, AppSize.widthScreen / 6),
+          bottomRight: Radius.elliptical(AppSize.heightScreen / 1.5, AppSize.widthScreen / 6),
+      )
+  );
+}
+
+class AppBoxDecoration {
+  static var boxDecorationWithGradient1 = BoxDecoration(
+    gradient: const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[AppColor.gradientColor1, AppColor.gradientColor2]
+    ),
+  );
 }

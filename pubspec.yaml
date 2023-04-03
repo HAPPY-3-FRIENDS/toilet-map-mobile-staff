@@ -43,6 +43,9 @@ dependencies:
   json_annotation: ^4.8.0
   string_splitter: ^1.0.0+1
   rate_limiter: ^1.0.0
+  shared_preferences: ^2.0.18
+
+  jwt_decode: ^0.3.1
 
 
 dev_dependencies:

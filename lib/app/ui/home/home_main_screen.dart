@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap_staff/app/ui/home/widgets/home_main_button_widget.dart';
 
 import '../../utils/Routes.dart';
 import '../../utils/constants.dart';
+import '../login/login_main_screen.dart';
 
 class HomeMainScreen extends StatefulWidget {
   const HomeMainScreen({Key? key}) : super(key: key);
@@ -27,6 +29,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
         elevation: 0,
         titleSpacing: 0,
 
+        automaticallyImplyLeading: false,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -89,7 +92,19 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               HomeMainButtonWidget(
                   icon: Icons.logout,
                   text: "Đăng xuất",
-                  function: () => {}
+                  function: () async {
+                    try {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.remove('accessToken');
+                      await prefs.remove('username');
+                      await prefs.remove('accountId');
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => const LoginMainScreen()), (
+                          route) => false);
+                    } catch (error) {
+                      print(error);
+                    }
+                  },
               ),
             ],
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 20, crossAxisSpacing: 10),

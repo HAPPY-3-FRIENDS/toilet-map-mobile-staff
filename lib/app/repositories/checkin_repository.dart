@@ -1,36 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:toiletmap_staff/app/models/checkin/checkin_model.dart';
-
-import '../network/network_helper.dart';
-import '../network/network_service.dart';
+import 'package:toiletmap_staff/app/models/checkin/checkin.dart';
 
 import 'package:http/http.dart' as http;
 
 class CheckinRepository {
-  final String _baseUrl = "https://toiletmap.azurewebsites.net/api/toilets/1/user-check-in";
-
-  /*Future postCheckin(toiletId, userId, serviceType, dateTime) async {
-    final response = await NetworkService.sendRequest(
-        requestType: RequestType.post,
-        body:
-        jsonEncode({
-          "userId": userId,
-          "serviceName": serviceType,
-          "dateTime": dateTime.toIso8601String()
-        }),
-        url: _baseUrl);
-
-    return NetworkHelper.filterResponse(
-        callBack: (json) => {},
-        response: response,
-        onFailureCallBackWithMessage: (errorType, msg) =>
-        throw Exception('An Error has happened. $errorType - $msg'));
-  }*/
+  final String _baseUrl = "https://toilet-map.azurewebsites.net/api/toilets/1/user/check-in";
 
   Future postCheckin(toiletId, userId, serviceType, dateTime) async {
     var response = await http.post(
-        Uri.parse("https://toiletmap.azurewebsites.net/api/toilets/1/user-check-in"),
+        Uri.parse("https://toilet-map.azurewebsites.net/api/toilets/1/user/check-in"),
         headers : {'Content-Type': 'application/json', 'charset': 'utf-8'},
         body:
         jsonEncode({

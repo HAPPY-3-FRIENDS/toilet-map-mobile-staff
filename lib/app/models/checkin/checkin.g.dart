@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'checkin_model.dart';
+part of 'checkin.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CheckinModel _$CheckinModelFromJson(Map<String, dynamic> json) => CheckinModel(
+Checkin _$CheckinFromJson(Map<String, dynamic> json) => Checkin(
       json['toiletId'] as int?,
       json['userId'] as int?,
       json['serviceType'] as String?,
@@ -15,9 +15,10 @@ CheckinModel _$CheckinModelFromJson(Map<String, dynamic> json) => CheckinModel(
           : DateTime.parse(json['dateTime'] as String),
     );
 
-Map<String, dynamic> _$CheckinModelToJson(CheckinModel instance) => <String, dynamic>{
-  'toiletId': instance.toiletId,
-  'userId': instance.userId,
-  'serviceType': instance.serviceType,
-  'dateTime': instance.dateTime?.toIso8601String(),
-};
+Map<String, dynamic> _$CheckinToJson(Checkin instance) =>
+    <String, dynamic>{
+      'toiletId': instance.toiletId,
+      'userId': instance.userId,
+      'serviceType': instance.serviceType,
+      'dateTime': instance.dateTime
+    };

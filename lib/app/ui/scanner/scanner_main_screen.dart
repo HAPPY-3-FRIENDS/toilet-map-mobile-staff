@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -18,7 +19,8 @@ class ScannerMainScreen extends StatefulWidget {
 }
 
 class _ScannerMainScreenState extends State<ScannerMainScreen> {
-  /*
+  */
+/*
   String data="";
   Future _qrScanner() async {
     var cameraStatus = await Permission.camera.status;
@@ -35,12 +37,15 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
         data = qrdata;
       }
     }
-  }*/
+  }*//*
+
   final GlobalKey _globalKey = GlobalKey();
   QRViewController? controller;
   Barcode? data;
 
-/*  void qr*/
+*/
+/*  void qr*//*
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,3 +174,4 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
     );
   }
 }
+*/

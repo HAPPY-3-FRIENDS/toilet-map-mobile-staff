@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toiletmap_staff/app/utils/Routes.dart';
 import 'package:toiletmap_staff/app/utils/router.dart' as router;
+
+late SharedPreferences sharedPreferences;
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: "Nhà vệ sinh công cộng - Nhân viên",
       debugShowCheckedModeBanner: false,
       home: Center(child: Text('Dự án Nhà vệ sinh công cộng')),
-      initialRoute: Routes.homeMainScreen,
+      initialRoute: Routes.loginMainScreen,
       onGenerateRoute: router.Router.generateRoute,
     );
   }
