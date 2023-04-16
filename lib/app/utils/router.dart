@@ -11,8 +11,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => const LoginMainScreen());
       case 'HomeMainScreen':
         return MaterialPageRoute(builder: (_) => const HomeMainScreen());
-     /* case 'ScannerMainScreen':
-        return MaterialPageRoute(builder: (_) => const ScannerMainScreen());*/
+      case 'ScannerMainScreen':
+        return MaterialPageRoute(builder: (_) => const ScannerMainScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

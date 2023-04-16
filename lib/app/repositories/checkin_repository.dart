@@ -1,16 +1,23 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:toiletmap_staff/app/models/checkin/checkin.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:toiletmap_staff/app/repositories/shared_preferences_repository.dart';
+import 'package:toiletmap_staff/app/utils/constants.dart';
 
 class CheckinRepository {
-  final String _baseUrl = "https://toilet-map.azurewebsites.net/api/toilets/1/user/check-in";
+  Future postCheckin(userId, serviceType, dateTime) async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
 
-  Future postCheckin(toiletId, userId, serviceType, dateTime) async {
     var response = await http.post(
-        Uri.parse("https://toilet-map.azurewebsites.net/api/toilets/1/user/check-in"),
-        headers : {'Content-Type': 'application/json', 'charset': 'utf-8'},
+        Uri.parse("${AppDomain.appDomain1}/api/toilets/${accountId}/user/check-in"),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+        },
         body:
         jsonEncode({
           "accountId": userId,
@@ -21,8 +28,15 @@ class CheckinRepository {
     print('response ne: ' + response.body);
     if (response.statusCode == 200) {
       return 200;
-    }else{
+    } else {
       return null;
     }
+  }
+
+  Future<int?> postCheckinFake(userId, serviceType, dateTime) async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    print('hihi checkin ' + accountId.toString() + " " + userId.toString() + " " + serviceType + " " + dateTime);
+    return 200;
   }
 }
