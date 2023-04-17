@@ -51,6 +51,19 @@ class AppText {
     color: Colors.white,
   );
 
+  static var passerByText1 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: AppSize.heightScreen / 45,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
+
+  static var passerByText2 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: AppSize.heightScreen / 45,
+    fontStyle: FontStyle.normal,
+    color: Colors.grey,
+  );
 }
 
 class AppShapeBorder {

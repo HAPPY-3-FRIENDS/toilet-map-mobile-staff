@@ -86,11 +86,10 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
                                               if (snapshot.connectionState == ConnectionState.waiting) {
                                                 return AlertDialog(
                                                   backgroundColor: Colors.white,
+                                                  alignment: Alignment.center,
                                                   title: Text('Đang xử lý'),
                                                   content: SingleChildScrollView(
-                                                    child: Container(
-                                                      height: AppSize.widthScreen /10,
-                                                      width: AppSize.widthScreen /10,
+                                                    child: Center(
                                                       child: CircularProgressIndicator(
                                                           color: AppColor.primaryColor1,
                                                           strokeWidth: 2.0
@@ -183,9 +182,7 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
                                                   backgroundColor: Colors.white,
                                                   title: Text('Đang xử lý'),
                                                   content: SingleChildScrollView(
-                                                      child: Container(
-                                                        height: AppSize.widthScreen /10,
-                                                        width: AppSize.widthScreen /10,
+                                                      child: Center(
                                                         child: CircularProgressIndicator(
                                                             color: AppColor.primaryColor1,
                                                             strokeWidth: 2.0
