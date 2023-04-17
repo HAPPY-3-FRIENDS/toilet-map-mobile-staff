@@ -44,6 +44,13 @@ class AppText {
       fontStyle: FontStyle.normal,
       color: AppColor.primaryColor1);
 
+  static var appbarTitleText1 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: AppSize.heightScreen / 30,
+    fontStyle: FontStyle.normal,
+    color: Colors.white,
+  );
+
 }
 
 class AppShapeBorder {
@@ -53,11 +60,25 @@ class AppShapeBorder {
           bottomRight: Radius.elliptical(AppSize.heightScreen / 1.5, AppSize.widthScreen / 6),
       )
   );
+
+  static var shapeBorder2 =  RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(AppSize.widthScreen / 40),
+      )
+  );
 }
 
 class AppBoxDecoration {
   static var boxDecorationWithGradient1 = BoxDecoration(
     gradient: const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[AppColor.gradientColor1, AppColor.gradientColor2]
+    ),
+  );
+
+  static const boxDecorationWithGradientNoBorder1 = BoxDecoration(
+    gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: <Color>[AppColor.gradientColor1, AppColor.gradientColor2]

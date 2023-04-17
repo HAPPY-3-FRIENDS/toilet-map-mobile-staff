@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'checkin.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Checkin {
   final int? userId;
   final int? toiletId;

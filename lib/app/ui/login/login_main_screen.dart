@@ -89,6 +89,8 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                               }
                             }
                           } catch (e) {
+                            print(e);
+
                             showDialog<void>(
                               context: context,
                               builder: (BuildContext context) {

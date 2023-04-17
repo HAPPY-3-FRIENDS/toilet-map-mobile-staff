@@ -15,10 +15,9 @@ Checkin _$CheckinFromJson(Map<String, dynamic> json) => Checkin(
           : DateTime.parse(json['dateTime'] as String),
     );
 
-Map<String, dynamic> _$CheckinToJson(Checkin instance) =>
-    <String, dynamic>{
-      'toiletId': instance.toiletId,
+Map<String, dynamic> _$CheckinToJson(Checkin instance) => <String, dynamic>{
       'userId': instance.userId,
+      'toiletId': instance.toiletId,
       'serviceType': instance.serviceType,
-      'dateTime': instance.dateTime
+      'dateTime': instance.dateTime?.toIso8601String(),
     };
