@@ -77,126 +77,130 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
 
                       return Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Column(
                             children: [
-                              //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                              Text('Dịch vụ', style: AppText.passerByText1),
-                              Text('Nhập số lượng (người)', style: AppText.passerByText1),
-                            ],
-                          ),
-                          SizedBox(height: AppSize.widthScreen / 20,),
-                          Divider(
-                            height: 5,
-                            color: AppColor.primaryColor2,
-                          ),
-                          SizedBox(height: AppSize.widthScreen / 20,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                              Text(snapshot!.data![0].service.name, style: AppText.passerByText1),
-                              Container(
-                                height: AppSize.heightScreen / 25,
-                                width: AppSize.widthScreen / 3,
-                                child: TextField(
-                                  onSubmitted: (value) => setState(() => peoplenumber1 = int.parse(value)),
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 60, vertical: 0),
-                                    hintText: peoplenumber1.toString(),
-                                    hintStyle: AppText.passerByText2,
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(AppSize.widthScreen / 80)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                  Text('Dịch vụ', style: AppText.passerByText1),
+                                  Text('Nhập số lượng (người)', style: AppText.passerByText1),
+                                ],
+                              ),
+                              SizedBox(height: AppSize.widthScreen / 20,),
+                              Divider(
+                                height: 5,
+                                color: AppColor.primaryColor2,
+                              ),
+                              SizedBox(height: AppSize.widthScreen / 20,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                  Text(snapshot!.data![0].service.name, style: AppText.passerByText1),
+                                  Container(
+                                    height: AppSize.heightScreen / 25,
+                                    width: AppSize.widthScreen / 3,
+                                    child: TextField(
+                                      onSubmitted: (value) => setState(() => peoplenumber1 = int.parse(value)),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 60, vertical: 0),
+                                        hintText: peoplenumber1.toString(),
+                                        hintStyle: AppText.passerByText2,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(AppSize.widthScreen / 80)
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: AppSize.widthScreen / 20,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                              Text(snapshot!.data![1].service.name, style: AppText.passerByText1),
-                              Container(
-                                height: AppSize.heightScreen / 25,
-                                width: AppSize.widthScreen / 3,
-                                child: TextField(
-                                  onSubmitted: (value) => setState(() => peoplenumber2 = int.parse(value)),
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 60, vertical: 0),
-                                    hintText: peoplenumber2.toString(),
-                                    hintStyle: AppText.passerByText2,
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(AppSize.widthScreen / 80)
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: AppSize.widthScreen / 20,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                  Text(snapshot!.data![1].service.name, style: AppText.passerByText1),
+                                  Container(
+                                    height: AppSize.heightScreen / 25,
+                                    width: AppSize.widthScreen / 3,
+                                    child: TextField(
+                                      onSubmitted: (value) => setState(() => peoplenumber2 = int.parse(value)),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 60, vertical: 0),
+                                        hintText: peoplenumber2.toString(),
+                                        hintStyle: AppText.passerByText2,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(AppSize.widthScreen / 80)
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: AppSize.widthScreen / 20,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                              Text(snapshot!.data![2].service.name, style: AppText.passerByText1),
-                              Container(
-                                height: AppSize.heightScreen / 25,
-                                width: AppSize.widthScreen / 3,
-                                child: TextField(
-                                  onSubmitted: (value) => setState(() => peoplenumber3 = int.parse(value)),
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 60, vertical: 0),
-                                    hintText: peoplenumber3.toString(),
-                                    hintStyle: AppText.passerByText2,
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(AppSize.widthScreen / 80)
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: AppSize.widthScreen / 20,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                  Text(snapshot!.data![2].service.name, style: AppText.passerByText1),
+                                  Container(
+                                    height: AppSize.heightScreen / 25,
+                                    width: AppSize.widthScreen / 3,
+                                    child: TextField(
+                                      onSubmitted: (value) => setState(() => peoplenumber3 = int.parse(value)),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 60, vertical: 0),
+                                        hintText: peoplenumber3.toString(),
+                                        hintStyle: AppText.passerByText2,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(AppSize.widthScreen / 80)
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: AppSize.widthScreen / 20,),
+                              Divider(
+                                height: 5,
+                                color: AppColor.primaryColor2,
+                              ),
+                              SizedBox(height: AppSize.widthScreen / 20,),
+                              Table(
+                                border: TableBorder.all(),
+                                columnWidths: {
+                                  0: FractionColumnWidth(0.4),
+                                  1: FractionColumnWidth(0.2),
+                                  2: FractionColumnWidth(0.2),
+                                  3: FractionColumnWidth(0.2),
+                                },
+                                children: [
+                                  buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
+                                  buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
+                                  buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
+                                  buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
+                                  //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
+                                ],
+                              ),
+                              SizedBox(height: AppSize.widthScreen / 10,),
                             ],
                           ),
-                          SizedBox(height: AppSize.widthScreen / 20,),
-                          Divider(
-                            height: 5,
-                            color: AppColor.primaryColor2,
-                          ),
-                          SizedBox(height: AppSize.widthScreen / 20,),
-                          Table(
-                            border: TableBorder.all(),
-                            columnWidths: {
-                              0: FractionColumnWidth(0.4),
-                              1: FractionColumnWidth(0.2),
-                              2: FractionColumnWidth(0.2),
-                              3: FractionColumnWidth(0.2),
-                            },
-                            children: [
-                              buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
-                              buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
-                              buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
-                              buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                              //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                            ],
-                          ),
-                          SizedBox(height: AppSize.widthScreen / 10,),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: AppSize.widthScreen / 20),
                             child: Column(

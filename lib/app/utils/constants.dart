@@ -64,6 +64,20 @@ class AppText {
     fontStyle: FontStyle.normal,
     color: Colors.grey,
   );
+
+  static var topupText1 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: AppSize.heightScreen / 45,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
+
+  static var topupText2 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: AppSize.heightScreen / 45,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
 }
 
 class AppShapeBorder {
