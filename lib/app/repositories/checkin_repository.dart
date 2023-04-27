@@ -40,7 +40,7 @@ class CheckinRepository {
       final responseJson = jsonDecode(response.body);
       BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
       print("checkin failed! " + baseResponse!.errors[0]!);
-      return null;
+      return UserInfo(0, baseResponse!.errors[0], "", 0, 0, "");
     }
   }
 

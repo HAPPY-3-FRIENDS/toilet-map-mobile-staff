@@ -6,12 +6,12 @@ part 'user_info.g.dart';
 class UserInfo {
   final int? accountId;
   final String? fullName;
-  final String? paymentMethod;
-  final int? balance;
-  final int? turn;
+  final String? defaultPayment;
+  final int? accountBalance;
+  final int? accountTurn;
   final String? username;
 
-  const UserInfo(this.accountId, this.fullName, this.paymentMethod, this.balance, this.turn, this.username);
+  const UserInfo(this.accountId, this.fullName, this.defaultPayment, this.accountBalance, this.accountTurn, this.username);
 
   factory UserInfo.fromJson(Map<String, dynamic> json) => _$UserInfoFromJson(json);
   Map<String, dynamic> toJson() => _$UserInfoToJson(this);

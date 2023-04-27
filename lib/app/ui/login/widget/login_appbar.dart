@@ -18,16 +18,16 @@ class LoginAppbar extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: AppSize.heightScreen / 10),
+          padding: EdgeInsets.only(top: AppSize.heightScreen / 8),
           child: Container(
-            width: 150.0,
-            height: 150.0,
+            width: AppSize.widthScreen / 2.5,
+            height: AppSize.widthScreen / 2.5,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/sample_avatar.jpg"),
+                image: AssetImage("assets/logo.png"),
                 fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.all( Radius.circular(75)),
+              borderRadius: BorderRadius.all( Radius.circular(AppSize.widthScreen / 5)),
               border: Border.all(
                 color: Colors.white,
                 width: 2.0,

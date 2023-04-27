@@ -9,17 +9,17 @@ part of 'user_info.dart';
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       json['accountId'] as int?,
       json['fullName'] as String?,
-      json['paymentMethod'] as String?,
-      json['balance'] as int?,
-      json['turn'] as int?,
+      json['defaultPayment'] as String?,
+      json['accountBalance'] as int?,
+      json['accountTurn'] as int?,
       json['username'] as String?,
     );
 
 Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'accountId': instance.accountId,
       'fullName': instance.fullName,
-      'paymentMethod': instance.paymentMethod,
-      'balance': instance.balance,
-      'turn': instance.turn,
+      'defaultPayment': instance.defaultPayment,
+      'accountBalance': instance.accountBalance,
+      'accountTurn': instance.accountTurn,
       'username': instance.username,
     };

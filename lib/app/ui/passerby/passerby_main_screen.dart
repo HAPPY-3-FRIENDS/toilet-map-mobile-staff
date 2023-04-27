@@ -250,7 +250,7 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                                       backgroundColor: Colors.white,
                                                       title: Text('Khách vãng lai'),
                                                       content: SingleChildScrollView(
-                                                        child: Text('Đã thu: ' + total.toString()),
+                                                        child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
                                                       ),
                                                     actions: <Widget>[
                                                       TextButton(
@@ -440,7 +440,7 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                                           backgroundColor: Colors.white,
                                                           title: Text('Khách vãng lai'),
                                                           content: SingleChildScrollView(
-                                                            child: Text('Đã thu: ' + total.toString()),
+                                                            child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
                                                           ),
                                                           actions: <Widget>[
                                                             TextButton(
@@ -602,7 +602,7 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                                           backgroundColor: Colors.white,
                                                           title: Text('Khách vãng lai'),
                                                           content: SingleChildScrollView(
-                                                            child: Text('Đã thu: ' + total.toString()),
+                                                            child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
                                                           ),
                                                           actions: <Widget>[
                                                             TextButton(
