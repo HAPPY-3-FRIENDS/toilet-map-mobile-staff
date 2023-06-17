@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:group_button/group_button.dart';
 import 'package:intl/intl.dart';
 import 'package:toiletmap_staff/app/models/userInfo/user_info.dart';
@@ -30,192 +31,214 @@ class _TopupMainScreenState extends State<TopupMainScreen> {
       top: true,
       bottom: true,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Nạp tiền'),
-          titleTextStyle: AppText.appbarTitleText1,
-          centerTitle: true,
-          toolbarHeight: AppSize.heightScreen / 12,
-          backgroundColor: Colors.transparent,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100.h),
+          child: Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(top: 20.h),
+            child: AppBar(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: AppColor.primaryColor1,
+                ),
+              ),
 
-          flexibleSpace: Container(
-            height: AppSize.heightScreen / 12,
-            decoration: AppBoxDecoration.boxDecorationWithGradientNoBorder1,
+              title: Text('Nạp tiền'),
+              titleTextStyle: AppText.appbarTitleText2,
+              centerTitle: true,
+              toolbarHeight: 100.h,
+              backgroundColor: Colors.white,
+              elevation: 0,
+
+              iconTheme: IconThemeData(
+                  color: AppColor.primaryColor1
+              ),
+            ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(AppSize.widthScreen / 15),
+        body: Padding(
+            padding: EdgeInsets.all(20.w),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Nhập số điện thoại", style: AppText.topupText1,),
-                SizedBox(height: AppSize.widthScreen / 20,),
-                TextField(
-                  keyboardType: TextInputType.phone,
-                  controller: phoneController,
-                  decoration: InputDecoration(
-                    hintText: "Số điện thoại",
-                    contentPadding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 30, vertical: 0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppSize.widthScreen / 80)
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () async {
-                        UserInfo? user = await UserRepository().getUserInformation(phoneController.text);
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Nhập số điện thoại", style: AppText.topupText1,),
+                      SizedBox(height: 20.h),
+                      TextField(
+                        keyboardType: TextInputType.phone,
+                        controller: phoneController,
+                        decoration: InputDecoration(
+                          hintText: "Số điện thoại",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 0),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.r)
+                          ),
+                          suffixIcon: IconButton(
+                              icon: Icon(Icons.search),
+                              onPressed: () async {
+                                UserInfo? user = await UserRepository().getUserInformation(phoneController.text);
 
-                        if (user != null) {
-                          setState(() {
-                            phone = phoneController.text;
-                            name = user!.fullName!;
-                            balance = NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(user!.accountBalance) + " VNĐ";
-                            userId = user!.accountId!;
-                          });
-                        } else {
-                          setState(() {
-                            phone = '-';
-                            name = 'Không tìm thấy';
-                            balance = '-';
-                            userId = 0;
-                          });
-                        }
-                      }
-                    ),
+                                if (user != null) {
+                                  setState(() {
+                                    phone = phoneController.text;
+                                    name = user!.fullName!;
+                                    balance = NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(user!.accountBalance) + " VNĐ";
+                                    userId = user!.accountId!;
+                                  });
+                                } else {
+                                  setState(() {
+                                    phone = '-';
+                                    name = 'Không tìm thấy';
+                                    balance = '-';
+                                    userId = 0;
+                                  });
+                                }
+                              }
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      Divider(
+                        height: 5,
+                        color: AppColor.primaryColor2,
+                      ),
+                      SizedBox(height: 20.h),
+                      Text("Thông tin khách hàng", style: AppText.topupText1,),
+                      SizedBox(height: 20.h),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text("Họ tên", style: AppText.topupText2),
+                              SizedBox(width: 18.w,),
+                              Expanded(
+                                child:  Container(
+                                  padding: EdgeInsets.all(10.w),
+                                  child: Text('${name}', style: AppText.topupText1,),
+                                  width: double.infinity,
+                                  height: 45.h,
+                                  decoration: BoxDecoration(
+                                      color: AppColor.primaryColor2,
+                                      borderRadius: BorderRadius.circular(10.r)
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+
+                          SizedBox(height: 20.h,),
+                          Row(
+                            children: [
+                              Text('Số điện thoại', style: AppText.topupText2),
+                              SizedBox(width: 18.w,),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.all(10.w),
+                                  child: Text('${phone}', style: AppText.topupText1,),
+                                  width: double.infinity,
+                                  height: 45.h,
+                                  decoration: BoxDecoration(
+                                      color: AppColor.primaryColor2,
+                                      borderRadius: BorderRadius.circular(10.r)
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+
+                          SizedBox(height: 20.h,),
+                          Row(
+                            children: [
+                              Text('Số tiền', style: AppText.topupText2),
+                              SizedBox(width: 18.w,),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.all(10.w),
+                                  child: Text('${balance}', style: AppText.topupText1,),
+                                  width: double.infinity,
+                                  height: 45.h,
+                                  decoration: BoxDecoration(
+                                      color: AppColor.primaryColor2,
+                                      borderRadius: BorderRadius.circular(10.r)
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 20.h),
+                      Text('Số tiền nạp (VNĐ)', style: AppText.topupText2),
+                      SizedBox(height: 20.h),
+                      GroupButton(
+                        onSelected: (value, index, isSelected) {
+                          print('index ne' + index.toString());
+                          switch (index) {
+                            case 0:
+                              setState(() {
+                                money = 10000;
+                              });
+                              break;
+                            case 1:
+                              setState(() {
+                                money = 20000;
+                              });
+                              break;
+                            case 2:
+                              setState(() {
+                                money = 50000;
+                              });
+                              break;
+                            case 3:
+                              setState(() {
+                                money = 100000;
+                              });
+                              break;
+                            case 4:
+                              setState(() {
+                                money = 200000;
+                              });
+                              break;
+                            case 5:
+                              setState(() {
+                                money = 500000;
+                              });
+                              break;
+                          }
+                        },
+                        isRadio: true,
+                        options: GroupButtonOptions(
+                          buttonWidth: 100.w,
+                          selectedColor: Colors.white,
+                          selectedBorderColor: AppColor.primaryColor1,
+                          borderRadius: BorderRadius.circular(20.r),
+                          mainGroupAlignment: MainGroupAlignment.center,
+                          crossGroupAlignment: CrossGroupAlignment.center,
+                          selectedTextStyle: AppText.topupText2,
+                          groupingType: GroupingType.wrap,
+                          unselectedTextStyle: AppText.topupText2,
+                        ),
+
+                        buttons: ['10,000','20,000','50,000','100,000','200,000','500,000'],
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: AppSize.widthScreen / 20,),
-                Divider(
-                  height: 5,
-                  color: AppColor.primaryColor2,
-                ),
-                SizedBox(height: AppSize.widthScreen / 20,),
-                Text("Thông tin khách hàng", style: AppText.topupText1,),
-                SizedBox(height: AppSize.widthScreen / 20,),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text("Họ tên", style: AppText.topupText2),
-                        SizedBox(width: AppSize.widthScreen / 20,),
-                        Expanded(
-                            child:  Container(
-                              padding: EdgeInsets.all(AppSize.widthScreen / 35),
-                              child: Text('${name}', style: AppText.topupText1,),
-                              width: double.infinity,
-                              height: AppSize.heightScreen / 20,
-                              decoration: BoxDecoration(
-                                  color: AppColor.primaryColor2,
-                                  borderRadius: BorderRadius.circular(AppSize.widthScreen / 60)
-                              ),
-                            ),
-                        )
-                      ],
-                    ),
-
-                    SizedBox(height: AppSize.widthScreen / 20,),
-                    Row(
-                      children: [
-                        Text('Số điện thoại', style: AppText.topupText2),
-                        SizedBox(width: AppSize.widthScreen / 20,),
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(AppSize.widthScreen / 35),
-                            child: Text('${phone}', style: AppText.topupText1,),
-                            width: double.infinity,
-                            height: AppSize.heightScreen / 20,
-                            decoration: BoxDecoration(
-                                color: AppColor.primaryColor2,
-                                borderRadius: BorderRadius.circular(AppSize.widthScreen / 60)
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-
-                    SizedBox(height: AppSize.widthScreen / 20,),
-                    Row(
-                      children: [
-                        Text('Số tiền', style: AppText.topupText2),
-                        SizedBox(width: AppSize.widthScreen / 20,),
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(AppSize.widthScreen / 35),
-                            child: Text('${balance}', style: AppText.topupText1,),
-                            width: double.infinity,
-                            height: AppSize.heightScreen / 20,
-                            decoration: BoxDecoration(
-                                color: AppColor.primaryColor2,
-                                borderRadius: BorderRadius.circular(AppSize.widthScreen / 60)
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: AppSize.widthScreen / 20,),
-                Text('Số tiền nạp (VNĐ)', style: AppText.topupText2),
-                SizedBox(height: AppSize.widthScreen / 20,),
-                GroupButton(
-                  onSelected: (value, index, isSelected) {
-                    print('index ne' + index.toString());
-                    switch (index) {
-                      case 0:
-                        setState(() {
-                          money = 10000;
-                        });
-                        break;
-                      case 1:
-                        setState(() {
-                          money = 20000;
-                        });
-                        break;
-                      case 2:
-                        setState(() {
-                          money = 50000;
-                        });
-                        break;
-                      case 3:
-                        setState(() {
-                          money = 100000;
-                        });
-                        break;
-                      case 4:
-                        setState(() {
-                          money = 200000;
-                        });
-                        break;
-                      case 5:
-                        setState(() {
-                          money = 500000;
-                        });
-                        break;
-                    }
-                  },
-                  isRadio: true,
-                  options: GroupButtonOptions(
-                    buttonWidth: AppSize.widthScreen / 4,
-                    selectedColor: Colors.white,
-                    selectedBorderColor: AppColor.primaryColor1,
-                    borderRadius: BorderRadius.circular(AppSize.widthScreen / 60),
-                    mainGroupAlignment: MainGroupAlignment.center,
-                    crossGroupAlignment: CrossGroupAlignment.center,
-                    selectedTextStyle: AppText.topupText2,
-                    groupingType: GroupingType.wrap,
-                    unselectedTextStyle: AppText.topupText2,
-                  ),
-
-                  buttons: ['10,000','20,000','50,000','100,000','200,000','500,000'],
-                ),
-                SizedBox(height: AppSize.widthScreen / 20,),
                 Padding(
-                    padding: EdgeInsets.symmetric(vertical: AppSize.widthScreen / 20),
+                    padding: EdgeInsets.symmetric(vertical: 20.w),
                     child: Column(
                       children: [
-                        Padding(padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 40),child: Row(
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 10.w),child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Số tiền nạp", style: AppText.passerByText1,),
@@ -224,12 +247,12 @@ class _TopupMainScreenState extends State<TopupMainScreen> {
                         ),),
                         SizedBox(
                           width: double.infinity,
-                          height: AppSize.heightScreen / 15,
+                          height: 60.h,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: AppColor.primaryColor1,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(AppSize.widthScreen / 30))),
+                                      borderRadius: BorderRadius.circular(20.r))),
                               onPressed: () async {
                                 print("User id: " + userId.toString());
                                 print("total: " + money.toString());
@@ -352,8 +375,7 @@ class _TopupMainScreenState extends State<TopupMainScreen> {
                     )
                 ),
               ],
-            ),
-          )
+            )
         )
       ),
     );

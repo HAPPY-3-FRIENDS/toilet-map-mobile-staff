@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UIConstant {
   static const String appName = "Toilet Map - Nhà Vệ Sinh Công Cộng";
@@ -34,63 +35,69 @@ class AppText {
 
   static var titleText1 = TextStyle(
       fontWeight: FontWeight.w400,
-      fontSize: AppSize.heightScreen / 30,
+      fontSize: 30.sp,
       fontStyle: FontStyle.normal,
       color: Colors.white);
 
   static var homeButtonText = TextStyle(
       fontWeight: FontWeight.w400,
-      fontSize: AppSize.heightScreen / 35,
+      fontSize: 24.sp,
       fontStyle: FontStyle.normal,
       color: AppColor.primaryColor1);
 
   static var appbarTitleText1 = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: AppSize.heightScreen / 30,
+    fontSize: 30.sp,
     fontStyle: FontStyle.normal,
     color: Colors.white,
   );
 
   static var passerByText1 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppSize.heightScreen / 45,
+    fontSize: 20.sp,
     fontStyle: FontStyle.normal,
     color: Colors.black,
   );
 
   static var passerByText2 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppSize.heightScreen / 45,
+    fontSize: 20.sp,
     fontStyle: FontStyle.normal,
     color: Colors.grey,
   );
 
   static var topupText1 = TextStyle(
     fontWeight: FontWeight.w600,
-    fontSize: AppSize.heightScreen / 45,
+    fontSize: 20.sp,
     fontStyle: FontStyle.normal,
     color: Colors.black,
   );
 
   static var topupText2 = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: AppSize.heightScreen / 45,
+    fontSize: 20.sp,
     fontStyle: FontStyle.normal,
     color: Colors.black,
+  );
+
+  static var appbarTitleText2 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 28.sp,
+    color: AppColor.primaryColor1,
   );
 }
 
 class AppShapeBorder {
   static var shapeBorder1 =  RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
-          bottomLeft: Radius.elliptical(AppSize.heightScreen / 1.5, AppSize.widthScreen / 6),
-          bottomRight: Radius.elliptical(AppSize.heightScreen / 1.5, AppSize.widthScreen / 6),
+          bottomLeft: Radius.elliptical(600.h, 60.w),
+          bottomRight: Radius.elliptical(600.h, 60.w),
       )
   );
 
   static var shapeBorder2 =  RoundedRectangleBorder(
       borderRadius: BorderRadius.all(
-        Radius.circular(AppSize.widthScreen / 40),
+        Radius.circular(10.r),
       )
   );
 }

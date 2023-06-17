@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toiletmap_staff/app/repositories/auth_repository.dart';
 import 'package:toiletmap_staff/app/ui/login/widget/login_appbar.dart';
 import 'package:toiletmap_staff/app/utils/constants.dart';
@@ -22,9 +23,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     usernameController.addListener(() => setState(() {
-
     }));
   }
 
@@ -40,26 +39,26 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
               children: [
                 LoginAppbar(),
                 Padding(
-                  padding: EdgeInsets.all(AppSize.widthScreen / 20),
+                  padding: EdgeInsets.all(20.w),
                   child: buildUsername(),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(AppSize.widthScreen / 20),
+                  padding: EdgeInsets.all(20.w),
                   child: buildPassword(),
                 ),
                 SizedBox(
-                  height: AppSize.heightScreen / 20,
+                  height: 20.h,
                 ),
                 Padding(
-                  padding: EdgeInsets.all(AppSize.widthScreen / 20),
+                  padding: EdgeInsets.all(20.w),
                   child: SizedBox(
                     width: double.infinity,
-                    height: AppSize.heightScreen / 15,
+                    height: 60.h,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: AppColor.primaryColor1,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(AppSize.widthScreen / 30))),
+                                borderRadius: BorderRadius.circular(20.r))),
                         onPressed: () async {
                           try {
                             if (usernameController.text.isEmpty || password.isEmpty) {
@@ -134,7 +133,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
         onPressed: () => usernameController.clear(),
       ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppSize.widthScreen / 30)
+        borderRadius: BorderRadius.circular(20.r)
       ),
     ),
     keyboardType: TextInputType.text,
@@ -157,7 +156,7 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
             setState(() => isPasswordVisible = !isPasswordVisible),
       ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppSize.widthScreen / 30)
+        borderRadius: BorderRadius.circular(20.r)
       ),
     ),
     obscureText: isPasswordVisible,

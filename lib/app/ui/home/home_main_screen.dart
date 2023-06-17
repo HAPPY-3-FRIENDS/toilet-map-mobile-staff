@@ -1,11 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stomp_dart_client/stomp.dart';
+import 'package:stomp_dart_client/stomp_config.dart';
+import 'package:stomp_dart_client/stomp_frame.dart';
+import 'package:toiletmap_staff/app/repositories/checkin_repository.dart';
 import 'package:toiletmap_staff/app/repositories/toilet_repository.dart';
 import 'package:toiletmap_staff/app/ui/home/widgets/home_main_button_widget.dart';
 import 'package:toiletmap_staff/app/utils/routes.dart';
+import 'package:http/http.dart' as http;
 
 import '../../models/toilet/toilet.dart';
 import '../../utils/constants.dart';
@@ -24,6 +32,12 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
   late Timer _timer;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
         top: true,
@@ -32,8 +46,8 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
             appBar: AppBar(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(AppSize.widthScreen /20),
-                    bottomRight: Radius.circular(AppSize.widthScreen /20)),
+                    bottomLeft: Radius.circular(20.r),
+                    bottomRight: Radius.circular(20.r)),
               ),
               elevation: 0,
               titleSpacing: 0,
@@ -42,8 +56,8 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(AppSize.widthScreen /20),
-                      bottomRight: Radius.circular(AppSize.widthScreen /20)),
+                      bottomLeft: Radius.circular(20.r),
+                      bottomRight: Radius.circular(20.r)),
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -52,7 +66,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               ),
 
               bottom: PreferredSize(
-                preferredSize: Size.fromHeight(AppSize.heightScreen / 4),
+                preferredSize: Size.fromHeight(230.h),
                 child: FutureBuilder<Toilet?> (
                     future: ToiletRepository().getToiletInformation(),
                     builder: (context, snapshot)  {
@@ -72,26 +86,26 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              width: AppSize.widthScreen / 3.5,
-                              height: AppSize.widthScreen / 3.5,
+                              width: 140.w,
+                              height: 140.w,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(snapshot!.data!.toiletImageSources[0]),
                                   fit: BoxFit.cover,
                                 ),
-                                borderRadius: BorderRadius.all( Radius.circular(50.0)),
+                                borderRadius: BorderRadius.all( Radius.circular(70.w)),
                                 border: Border.all(
                                   color: Colors.white,
                                   width: 2.0,
                                 ),
                               ),
                             ),
-                            SizedBox(height: AppSize.heightScreen / 40,),
+                            SizedBox(height: 20.h,),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: AppSize.widthScreen / 20),
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: Text(snapshot!.data!.toiletName, style: AppText.titleText1,),
                             ),
-                            SizedBox(height: AppSize.heightScreen / 15,),
+                            SizedBox(height: 20.h,),
                           ],
                         );
                       }
@@ -101,7 +115,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
             ),
             body: Container(
                 child: Padding(
-                  padding: EdgeInsets.all(AppSize.widthScreen / 20),
+                  padding: EdgeInsets.all(20.w),
                   child: GridView(
                     children: [
                       HomeMainButtonWidget(
@@ -142,7 +156,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                         },
                       ),
                     ],
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: AppSize.widthScreen / 20, crossAxisSpacing: AppSize.widthScreen / 40),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 20.w, crossAxisSpacing: 10.w),
                   ),
                 )
             )

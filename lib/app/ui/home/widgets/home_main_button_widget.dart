@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../utils/Routes.dart';
 
 import '../../../utils/constants.dart';
@@ -15,10 +16,10 @@ class HomeMainButtonWidget extends StatelessWidget {
     return InkWell(
       onTap: () => function(),
       child: Container(
-        padding: EdgeInsets.all(AppSize.widthScreen / 40),
+        padding: EdgeInsets.all(10.w),
         decoration: BoxDecoration(
           color: AppColor.primaryColor2,
-          borderRadius: BorderRadius.circular(AppSize.widthScreen / 40),
+          borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(offset: Offset(0.0, 5.0), blurRadius: 5.0, color: Colors.black12),
           ],
@@ -26,7 +27,7 @@ class HomeMainButtonWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(icon,size: AppSize.widthScreen / 4, color: AppColor.primaryColor1),
+            Icon(icon,size: 80.w, color: AppColor.primaryColor1),
             Text(text, style: AppText.homeButtonText,)
           ],
         ),

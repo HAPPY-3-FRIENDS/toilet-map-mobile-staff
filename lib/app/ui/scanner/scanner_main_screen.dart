@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -34,351 +35,350 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
         top: true,
         bottom: true,
         child: Scaffold(
-          appBar: AppBar(
-            title: Text('Quét mã thanh toán'),
-            titleTextStyle: AppText.appbarTitleText1,
-            centerTitle: true,
-            toolbarHeight: AppSize.heightScreen / 12,
-            backgroundColor: Colors.transparent,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(100.h),
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.only(top: 20.h),
+              child: AppBar(
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios_rounded,
+                    color: AppColor.primaryColor1,
+                  ),
+                ),
 
-            flexibleSpace: Container(
-              height: AppSize.heightScreen / 12,
-              decoration: AppBoxDecoration.boxDecorationWithGradientNoBorder1,
+                title: Text('Quét mã thanh toán'),
+                titleTextStyle: AppText.appbarTitleText2,
+                centerTitle: true,
+                toolbarHeight: 100.h,
+                backgroundColor: Colors.white,
+                elevation: 0,
+
+                iconTheme: IconThemeData(
+                    color: AppColor.primaryColor1
+                ),
+              ),
             ),
           ),
           body: SingleChildScrollView(
             child: Container(
-              height: AppSize.heightScreen * 0.8,
-              margin: EdgeInsets.all(AppSize.widthScreen / 40),
-              decoration: BoxDecoration(
-                color: AppColor.primaryColor2,
-                borderRadius: BorderRadius.circular(AppSize.widthScreen / 40),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          height: AppSize.heightScreen / 1.5,
-                          width: AppSize.widthScreen / 1.2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppSize.widthScreen / 20),
-                          ),
-
-                          child: QRView(
-                            key: _globalKey,
-                            onQRViewCreated: (QRViewController controller) {
-                              this.controller = controller;
-                              controller.scannedDataStream.listen((event) {
-                                setState(() {
-                                  data = event;
-                                  controller.pauseCamera();
-                                  List<String> content = StringSplitter.split(data!.code!, splitters: [' - ']);
-                                  if (content.length == 3) {
-                                    showDialog(
-                                      barrierDismissible: false,
-                                        context: context,
-                                        builder: (BuildContext builderContext) {
-                                          return FutureBuilder<UserInfo?> (
-                                              future: CheckinRepository().postCheckin(
-                                                  int.parse(content[0]), content[1], content[2]
+              width: double.infinity,
+              height: 800.h,
+              child: QRView(
+                overlay: QrScannerOverlayShape(
+                    borderRadius: 20.r,
+                    borderLength: 40.w,
+                    borderWidth: 5.r,
+                    borderColor: AppColor.primaryColor1,
+                    cutOutHeight: 400.w,
+                    cutOutWidth: 300.w,
+                  cutOutBottomOffset: 70.h
+                ),
+                key: _globalKey,
+                onQRViewCreated: (QRViewController controller) {
+                  this.controller = controller;
+                  controller.scannedDataStream.listen((event) {
+                    setState(() {
+                      data = event;
+                      controller.pauseCamera();
+                      List<String> content = StringSplitter.split(data!.code!, splitters: [' - ']);
+                      if (content.length == 3) {
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (BuildContext builderContext) {
+                              return FutureBuilder<UserInfo?> (
+                                  future: CheckinRepository().postCheckin(
+                                      int.parse(content[0]), content[1], content[2]
+                                  ),
+                                  builder: (context, snapshot)  {
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return AlertDialog(
+                                        backgroundColor: Colors.white,
+                                        alignment: Alignment.center,
+                                        title: Text('Đang xử lý'),
+                                        content: SingleChildScrollView(
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                  color: AppColor.primaryColor1,
+                                                  strokeWidth: 2.0
                                               ),
-                                              builder: (context, snapshot)  {
-                                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                                  return AlertDialog(
-                                                    backgroundColor: Colors.white,
-                                                    alignment: Alignment.center,
-                                                    title: Text('Đang xử lý'),
-                                                    content: SingleChildScrollView(
-                                                      child: Center(
-                                                        child: CircularProgressIndicator(
-                                                            color: AppColor.primaryColor1,
-                                                            strokeWidth: 2.0
-                                                        ),
-                                                      )
-                                                    ),
-                                                  );
-                                                }
+                                            )
+                                        ),
+                                      );
+                                    }
 
-                                                if (snapshot.hasData) {
-                                                  _timer = Timer(Duration(seconds: 2), () {
-                                                    Navigator.of(context).pop();
-                                                    controller.resumeCamera();
-                                                  });
+                                    if (snapshot.hasData) {
+                                      _timer = Timer(Duration(seconds: 2), () {
+                                        Navigator.of(context).pop();
+                                        controller.resumeCamera();
+                                      });
 
-                                                  if (snapshot!.data!.accountId == 0) {
-                                                    return AlertDialog(
-                                                      backgroundColor: Colors.white,
-                                                      title: Text('Lỗi'),
-                                                      content: SingleChildScrollView(
-                                                        child: Text(snapshot!.data!.fullName!),
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    return AlertDialog(
-                                                      backgroundColor: Colors.white,
-                                                      title: Text('Thông tin khách hàng'),
-                                                      content: SingleChildScrollView(
-                                                          child: Container(
-                                                            width: AppSize.widthScreen / 1.2,
-                                                            height: AppSize.heightScreen / 3,
-                                                            child: Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: [
-                                                                Expanded(
-                                                                    flex: 1,
-                                                                    child: SizedBox()
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Khách hàng: " + snapshot!.data!.fullName!, maxLines: 2, overflow: TextOverflow.ellipsis,
-                                                                    style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Sđt: " + snapshot!.data!.username!),
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Phương thức thanh toán: " + snapshot!.data!.defaultPayment!, maxLines: 2, overflow: TextOverflow.ellipsis,style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                      fontSize: AppSize.heightScreen/40
-                                                                  ),),
-                                                                ),
-
-                                                                (snapshot!.data!.defaultPayment! == "Số lượt") ?
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Số lượt còn: " + snapshot!.data!.accountTurn!.toString(),
-                                                                    style: TextStyle(
-                                                                        fontWeight: FontWeight.bold,
-                                                                        fontSize: AppSize.heightScreen/40
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                                    :
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child:  Text("Số tiền còn: " +
-                                                                      NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data!.accountBalance!) + " VNĐ",
-                                                                    style: TextStyle(
-                                                                        fontWeight: FontWeight.bold,
-                                                                        fontSize: AppSize.heightScreen/40
-                                                                    ),),
-                                                                ),
-
-                                                                (snapshot!.data!.defaultPayment! == "Số lượt") ?
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Số tiền còn: " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data!.accountBalance!) + " VNĐ",),
-                                                                )
-                                                                    :
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child:  Text("Số lượt còn: " + snapshot!.data!.accountBalance!.toString(),),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                      ),
-                                                    );
-                                                  }
-                                                } else {
-                                                  _timer = Timer(Duration(seconds: 2), () {
-                                                    Navigator.of(context).pop();
-                                                    controller.resumeCamera();
-                                                  });
-                                                  return AlertDialog(
-                                                    backgroundColor: Colors.white,
-                                                    title: Text('Lỗi'),
-                                                    content: SingleChildScrollView(
-                                                      child: Text('Đã xảy ra lỗi!'),
-                                                    ),
-                                                  );
-                                                }
-                                              });
-                                        }
-                                    ).then((val){
-                                      if (_timer.isActive) {
-                                        _timer.cancel();
-                                      }
-                                    });
-                                    data = null;
-                                  }
-                                  else if (content.length == 1) {
-                                    showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (BuildContext builderContext) {
-                                          return FutureBuilder<UserInfo?> (
-                                              future: CheckinRepository().postCheckinWithStaticQR(
-                                                  int.parse(content[0])
-                                              ),
-                                              builder: (context, snapshot)  {
-                                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                                  return AlertDialog(
-                                                    backgroundColor: Colors.white,
-                                                    title: Text('Đang xử lý'),
-                                                    content: SingleChildScrollView(
-                                                        child: Center(
-                                                          child: CircularProgressIndicator(
-                                                              color: AppColor.primaryColor1,
-                                                              strokeWidth: 2.0
-                                                          ),
-                                                        )
-                                                    ),
-                                                  );
-                                                }
-
-                                                if (snapshot.hasData) {
-
-                                                  _timer = Timer(Duration(seconds: 2), () {
-                                                    Navigator.of(context).pop();
-                                                    controller.resumeCamera();
-                                                  });
-
-                                                  if (snapshot!.data!.accountId == 0) {
-                                                    return AlertDialog(
-                                                      backgroundColor: Colors.white,
-                                                      title: Text('Lỗi'),
-                                                      content: SingleChildScrollView(
-                                                        child: Text(snapshot!.data!.fullName!),
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    return AlertDialog(
-                                                      backgroundColor: Colors.white,
-                                                      title: Text('Thông tin khách hàng'),
-                                                      content: SingleChildScrollView(
-                                                          child: Container(
-                                                            width: AppSize.widthScreen / 1.2,
-                                                            height: AppSize.heightScreen / 3,
-                                                            child: Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: [
-                                                                Expanded(
-                                                                    flex: 1,
-                                                                    child: SizedBox()
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Khách hàng: " + snapshot!.data!.fullName!, maxLines: 2, overflow: TextOverflow.ellipsis,
-                                                                    style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Sđt: " + snapshot!.data!.username!),
-                                                                ),
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Phương thức thanh toán: " + snapshot!.data!.defaultPayment!, maxLines: 2, overflow: TextOverflow.ellipsis,style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                      fontSize: AppSize.heightScreen/40
-                                                                  ),),
-                                                                ),
-
-                                                                (snapshot!.data!.defaultPayment! == "Số lượt") ?
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Số lượt còn: " + snapshot!.data!.accountTurn!.toString(),
-                                                                    style: TextStyle(
-                                                                        fontWeight: FontWeight.bold,
-                                                                        fontSize: AppSize.heightScreen/40
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                                    :
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child:  Text("Số tiền còn: " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data!.accountBalance!) + " VNĐ",
-                                                                    style: TextStyle(
-                                                                        fontWeight: FontWeight.bold,
-                                                                        fontSize: AppSize.heightScreen/40
-                                                                    ),),
-                                                                ),
-
-                                                                (snapshot!.data!.defaultPayment! == "Số lượt") ?
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Text("Số tiền còn: " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data!.accountBalance!) + " VNĐ",),
-                                                                )
-                                                                    :
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child:  Text("Số lượt còn: " + snapshot!.data!.accountBalance!.toString(),),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                      ),
-                                                    );
-                                                  }
-                                                } else {
-                                                  _timer = Timer(Duration(seconds: 2), () {
-                                                    Navigator.of(context).pop();
-                                                    controller.resumeCamera();
-                                                  });
-                                                  return AlertDialog(
-                                                    backgroundColor: Colors.white,
-                                                    title: Text('Lỗi'),
-                                                    content: SingleChildScrollView(
-                                                      child: Text('Đã xảy ra lỗi!'),
-                                                    ),
-                                                  );
-                                                }
-                                              });
-                                        }
-                                    ).then((val){
-                                      if (_timer.isActive) {
-                                        _timer.cancel();
-                                      }
-                                    });
-                                    data = null;
-                                  }
-                                  else {
-                                    showDialog<void>(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        _timer = Timer(Duration(seconds: 2), () {
-                                          Navigator.of(context).pop();
-                                          controller.resumeCamera();
-                                        });
+                                      if (snapshot!.data!.accountId == 0) {
                                         return AlertDialog(
                                           backgroundColor: Colors.white,
                                           title: Text('Lỗi'),
                                           content: SingleChildScrollView(
-                                            child: Text('Đã xảy ra lỗi!'),
+                                            child: Text(snapshot!.data!.fullName!),
                                           ),
                                         );
-                                      },
-                                    ).then((val){
-                                      if (_timer.isActive) {
-                                        _timer.cancel();
+                                      } else {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: Text('Thông tin khách hàng'),
+                                          content: SingleChildScrollView(
+                                              child: Container(
+                                                width: 300.w,
+                                                height: 300.h,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: SizedBox()
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Khách hàng: " + snapshot!.data!.fullName!, maxLines: 2, overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Sđt: " + snapshot!.data!.username!),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Phương thức thanh toán: " + snapshot!.data!.defaultPayment!, maxLines: 2, overflow: TextOverflow.ellipsis,style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 20.sp
+                                                      ),),
+                                                    ),
+
+                                                    (snapshot!.data!.defaultPayment! == "Số lượt") ?
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Số lượt còn: " + snapshot!.data!.accountTurn!.toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 20.sp
+                                                        ),
+                                                      ),
+                                                    )
+                                                        :
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child:  Text("Số tiền còn: " +
+                                                          NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data!.accountBalance!) + " VNĐ",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 20.sp
+                                                        ),),
+                                                    ),
+
+                                                    (snapshot!.data!.defaultPayment! == "Số lượt") ?
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Số tiền còn: " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data!.accountBalance!) + " VNĐ",),
+                                                    )
+                                                        :
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child:  Text("Số lượt còn: " + snapshot!.data!.accountBalance!.toString(),),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                          ),
+                                        );
                                       }
-                                    });
-                                  }
-                                });
-                              });
-                            },
-                          ),
-                        ),
-                        SizedBox(height: AppSize.heightScreen / 40,),
-                        Center(
-                          child: Text('Quét mã thanh toán'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                                    } else {
+                                      _timer = Timer(Duration(seconds: 2), () {
+                                        Navigator.of(context).pop();
+                                        controller.resumeCamera();
+                                      });
+                                      return AlertDialog(
+                                        backgroundColor: Colors.white,
+                                        title: Text('Lỗi'),
+                                        content: SingleChildScrollView(
+                                          child: Text('Đã xảy ra lỗi!'),
+                                        ),
+                                      );
+                                    }
+                                  });
+                            }
+                        ).then((val){
+                          if (_timer.isActive) {
+                            _timer.cancel();
+                          }
+                        });
+                        data = null;
+                      }
+                      else if (content.length == 1) {
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (BuildContext builderContext) {
+                              return FutureBuilder<UserInfo?> (
+                                  future: CheckinRepository().postCheckinWithStaticQR(
+                                      int.parse(content[0])
+                                  ),
+                                  builder: (context, snapshot)  {
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return AlertDialog(
+                                        backgroundColor: Colors.white,
+                                        title: Text('Đang xử lý'),
+                                        content: SingleChildScrollView(
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                  color: AppColor.primaryColor1,
+                                                  strokeWidth: 2.0
+                                              ),
+                                            )
+                                        ),
+                                      );
+                                    }
+
+                                    if (snapshot.hasData) {
+
+                                      _timer = Timer(Duration(seconds: 2), () {
+                                        Navigator.of(context).pop();
+                                        controller.resumeCamera();
+                                      });
+
+                                      if (snapshot!.data!.accountId == 0) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: Text('Lỗi'),
+                                          content: SingleChildScrollView(
+                                            child: Text(snapshot!.data!.fullName!),
+                                          ),
+                                        );
+                                      } else {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: Text('Thông tin khách hàng'),
+                                          content: SingleChildScrollView(
+                                              child: Container(
+                                                width: AppSize.widthScreen / 1.2,
+                                                height: AppSize.heightScreen / 3,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: SizedBox()
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Khách hàng: " + snapshot!.data!.fullName!, maxLines: 2, overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Sđt: " + snapshot!.data!.username!),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Phương thức thanh toán: " + snapshot!.data!.defaultPayment!, maxLines: 2, overflow: TextOverflow.ellipsis,style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: AppSize.heightScreen/40
+                                                      ),),
+                                                    ),
+
+                                                    (snapshot!.data!.defaultPayment! == "Số lượt") ?
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Số lượt còn: " + snapshot!.data!.accountTurn!.toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: AppSize.heightScreen/40
+                                                        ),
+                                                      ),
+                                                    )
+                                                        :
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child:  Text("Số tiền còn: " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data!.accountBalance!) + " VNĐ",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: AppSize.heightScreen/40
+                                                        ),),
+                                                    ),
+
+                                                    (snapshot!.data!.defaultPayment! == "Số lượt") ?
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text("Số tiền còn: " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data!.accountBalance!) + " VNĐ",),
+                                                    )
+                                                        :
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child:  Text("Số lượt còn: " + snapshot!.data!.accountBalance!.toString(),),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      _timer = Timer(Duration(seconds: 2), () {
+                                        Navigator.of(context).pop();
+                                        controller.resumeCamera();
+                                      });
+                                      return AlertDialog(
+                                        backgroundColor: Colors.white,
+                                        title: Text('Lỗi'),
+                                        content: SingleChildScrollView(
+                                          child: Text('Đã xảy ra lỗi!'),
+                                        ),
+                                      );
+                                    }
+                                  });
+                            }
+                        ).then((val){
+                          if (_timer.isActive) {
+                            _timer.cancel();
+                          }
+                        });
+                        data = null;
+                      }
+                      else {
+                        showDialog<void>(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) {
+                            _timer = Timer(Duration(seconds: 2), () {
+                              Navigator.of(context).pop();
+                              controller.resumeCamera();
+                            });
+                            return AlertDialog(
+                              backgroundColor: Colors.white,
+                              title: Text('Lỗi'),
+                              content: SingleChildScrollView(
+                                child: Text('Đã xảy ra lỗi!'),
+                              ),
+                            );
+                          },
+                        ).then((val){
+                          if (_timer.isActive) {
+                            _timer.cancel();
+                          }
+                        });
+                      }
+                    });
+                  });
+                },
               ),
             ),
           ),

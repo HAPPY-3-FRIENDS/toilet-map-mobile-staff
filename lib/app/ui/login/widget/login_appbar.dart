@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../utils/constants.dart';
 
@@ -11,23 +12,23 @@ class LoginAppbar extends StatelessWidget {
       alignment: Alignment.topCenter,
       children: [
         AppBar(
-          toolbarHeight: AppSize.heightScreen / 4,
+          toolbarHeight: 225.h,
           shape: AppShapeBorder.shapeBorder1,
           flexibleSpace: Container(
               decoration: AppBoxDecoration.boxDecorationWithGradient1
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: AppSize.heightScreen / 8),
+          padding: EdgeInsets.only(top: 112.5.h),
           child: Container(
-            width: AppSize.widthScreen / 2.5,
-            height: AppSize.widthScreen / 2.5,
+            width: 150.w,
+            height: 150.w,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/logo.png"),
                 fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.all( Radius.circular(AppSize.widthScreen / 5)),
+              borderRadius: BorderRadius.all( Radius.circular(75.w)),
               border: Border.all(
                 color: Colors.white,
                 width: 2.0,
