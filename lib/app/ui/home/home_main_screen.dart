@@ -10,11 +10,13 @@ import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 import 'package:toiletmap_staff/app/repositories/checkin_repository.dart';
+import 'package:toiletmap_staff/app/repositories/room_repository.dart';
 import 'package:toiletmap_staff/app/repositories/toilet_repository.dart';
 import 'package:toiletmap_staff/app/ui/home/widgets/home_main_button_widget.dart';
 import 'package:toiletmap_staff/app/utils/routes.dart';
 import 'package:http/http.dart' as http;
 
+import '../../models/room/room.dart';
 import '../../models/toilet/toilet.dart';
 import '../../utils/constants.dart';
 import '../login/login_main_screen.dart';
@@ -137,6 +139,14 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                           text: "Nạp tiền",
                           function: () => {
                             Navigator.pushNamed(context, Routes.topupMainScreen)
+                          }
+                      ),
+                      HomeMainButtonWidget(
+                          icon: Icons.room_preferences,
+                          text: "Quản lý phòng",
+                          function: () async {
+                            Room? room = await RoomRepository().getRoomInformation();
+                            Navigator.pushNamed(context, Routes.roomManageMainScreen, arguments: room!);
                           }
                       ),
                       HomeMainButtonWidget(

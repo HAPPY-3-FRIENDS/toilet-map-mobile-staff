@@ -4,4 +4,5 @@ class Routes {
   static const String scannerMainScreen = 'ScannerMainScreen';
   static const String passerbyMainScreen = 'PasserbyMainScreen';
   static const String topupMainScreen = 'TopupMainScreen';
+  static const String roomManageMainScreen = 'RoomManageMainScreen';
 }

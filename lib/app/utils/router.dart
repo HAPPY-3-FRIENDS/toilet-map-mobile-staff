@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:toiletmap_staff/app/ui/scanner/scanner_main_screen.dart';
 
+import '../models/room/room.dart';
 import '../ui/home/home_main_screen.dart';
 import '../ui/login/login_main_screen.dart';
 import '../ui/passerby/passerby_main_screen.dart';
+import '../ui/roommanage/room_manage_main_screen.dart';
 import '../ui/topup/topup_main_screen.dart';
 
 class Router {
@@ -19,6 +21,9 @@ class Router {
         return MaterialPageRoute(builder: (_) => const PasserbyMainScreen());
       case 'TopupMainScreen':
         return MaterialPageRoute(builder: (_) => const TopupMainScreen());
+      case 'RoomManageMainScreen':
+        final index = settings.arguments as Room;
+        return MaterialPageRoute(builder: (_) => RoomManageMainScreen(room: index,));
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

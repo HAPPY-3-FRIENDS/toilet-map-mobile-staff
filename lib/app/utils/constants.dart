@@ -41,7 +41,7 @@ class AppText {
 
   static var homeButtonText = TextStyle(
       fontWeight: FontWeight.w400,
-      fontSize: 24.sp,
+      fontSize: 22.sp,
       fontStyle: FontStyle.normal,
       color: AppColor.primaryColor1);
 
@@ -84,6 +84,20 @@ class AppText {
     fontWeight: FontWeight.w500,
     fontSize: 28.sp,
     color: AppColor.primaryColor1,
+  );
+
+  static var roommanageText1 = TextStyle(
+    fontWeight: FontWeight.w800,
+    fontSize: 18.sp,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+  );
+
+  static var roommanageText2 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 18.sp,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
   );
 }
 
