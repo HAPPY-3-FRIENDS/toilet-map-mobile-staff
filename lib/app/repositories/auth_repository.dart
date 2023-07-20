@@ -12,6 +12,12 @@ import '../utils/constants.dart';
 
 class AuthRepository {
   Future<AccessToken?> authLogin(String username, String password) async {
+   /* String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+    print('hashPassword: ' + hashPassword);
+    BCrypt.
+    print(BCrypt.checkpw(password, "\$2a\$10\$4uC1cx1vwiuZKgRtuQqyd.CaYVXPzyWlyJGXalk5EMKmg/tpUbGv2"));
+*/
     final response = await http.post(
         Uri.parse('${AppDomain.appDomain1}/api/auth'),
         headers: {
