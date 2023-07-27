@@ -5,7 +5,7 @@ import 'package:toiletmap_staff/app/ui/login/widget/login_appbar.dart';
 import 'package:toiletmap_staff/app/utils/constants.dart';
 
 import '../../models/accessToken/access_token.dart';
-import '../../utils/Routes.dart';
+import '../../utils/routes.dart';
 
 class LoginMainScreen extends StatefulWidget {
   const LoginMainScreen({Key? key}) : super(key: key);
@@ -110,6 +110,24 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
                           }
                         },
                         child: Text("Đăng nhập", style: TextStyle(color: Colors.white),)
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20.w),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 60.h,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.r))),
+                        onPressed: () async {
+                          Navigator.pushNamed(context, Routes.configScreen);
+                        },
+                        child: Text("Đăng nhập", style: TextStyle(color: Colors.transparent),)
                     ),
                   ),
                 ),

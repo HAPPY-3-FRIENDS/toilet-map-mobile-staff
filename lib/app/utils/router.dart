@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toiletmap_staff/app/ui/scanner/scanner_main_screen.dart';
 
 import '../models/room/room.dart';
+import '../ui/config/config_screen.dart';
 import '../ui/home/home_main_screen.dart';
 import '../ui/login/login_main_screen.dart';
 import '../ui/passerby/passerby_main_screen.dart';
@@ -24,6 +25,8 @@ class Router {
       case 'RoomManageMainScreen':
         final index = settings.arguments as Room;
         return MaterialPageRoute(builder: (_) => RoomManageMainScreen(room: index,));
+      case 'ConfigScreen':
+        return MaterialPageRoute(builder: (_) => const ConfigScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

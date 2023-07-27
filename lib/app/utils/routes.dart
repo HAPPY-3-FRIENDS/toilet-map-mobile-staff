@@ -5,4 +5,5 @@ class Routes {
   static const String passerbyMainScreen = 'PasserbyMainScreen';
   static const String topupMainScreen = 'TopupMainScreen';
   static const String roomManageMainScreen = 'RoomManageMainScreen';
+  static const String configScreen = 'ConfigScreen';
 }

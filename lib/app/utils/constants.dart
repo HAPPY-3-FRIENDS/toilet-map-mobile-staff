@@ -11,7 +11,7 @@ class AppSize {
 }
 
 class AppDomain {
-  static const String appDomain1 = 'https://toilet-map.azurewebsites.net';
+  static String appDomain1 = 'http://192.168.1.5:8081';
   static const String appDomain2 = 'https://toiletmap.azurewebsites.net';
 }
 
