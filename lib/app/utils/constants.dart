@@ -11,7 +11,7 @@ class AppSize {
 }
 
 class AppDomain {
-  static String appDomain1 = 'http://192.168.1.5:8081';
+  static String appDomain1 = 'http://172.16.17.33:8081';
   static const String appDomain2 = 'https://toiletmap.azurewebsites.net';
 }
 
@@ -84,6 +84,12 @@ class AppText {
     fontWeight: FontWeight.w500,
     fontSize: 28.sp,
     color: AppColor.primaryColor1,
+  );
+
+  static var titleText3 = TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 20.sp,
+      color: AppColor.primaryColor1
   );
 
   static var roommanageText1 = TextStyle(

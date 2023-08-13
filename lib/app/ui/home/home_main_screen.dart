@@ -9,12 +9,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
+import 'package:toiletmap_staff/app/models/roomAll/room_all.dart';
+import 'package:toiletmap_staff/app/models/roomStatus/room_status.dart';
 import 'package:toiletmap_staff/app/repositories/checkin_repository.dart';
 import 'package:toiletmap_staff/app/repositories/room_repository.dart';
 import 'package:toiletmap_staff/app/repositories/toilet_repository.dart';
 import 'package:toiletmap_staff/app/ui/home/widgets/home_main_button_widget.dart';
 import 'package:toiletmap_staff/app/utils/routes.dart';
 import 'package:http/http.dart' as http;
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../models/room/room.dart';
 import '../../models/toilet/toilet.dart';
@@ -145,8 +149,17 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                           icon: Icons.room_preferences,
                           text: "Quản lý phòng",
                           function: () async {
+                            QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.loading,
+                              title: 'Đang tải dữ liệu',
+                              barrierDismissible: false
+                            );
                             Room? room = await RoomRepository().getRoomInformation();
-                            Navigator.pushNamed(context, Routes.roomManageMainScreen, arguments: room!);
+                            RoomStatus? roomStatus = await RoomRepository().getRoomStatusInformation();
+                            RoomAll roomAll = RoomAll(room!, roomStatus!);
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, Routes.roomManageMainScreen, arguments: roomAll);
                           }
                       ),
                       HomeMainButtonWidget(

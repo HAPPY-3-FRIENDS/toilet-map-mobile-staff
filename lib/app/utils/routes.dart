@@ -6,4 +6,6 @@ class Routes {
   static const String topupMainScreen = 'TopupMainScreen';
   static const String roomManageMainScreen = 'RoomManageMainScreen';
   static const String configScreen = 'ConfigScreen';
+  static const String roomLockScreen = 'RoomLockScreen';
+  static const String roomStatusScreen = 'RoomStatusScreen';
 }
