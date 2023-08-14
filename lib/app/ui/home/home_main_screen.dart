@@ -163,6 +163,23 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                           }
                       ),
                       HomeMainButtonWidget(
+                          icon: Icons.search,
+                          text: "Tìm kiếm NVS",
+                          function: () async {
+                            QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.loading,
+                                title: 'Đang tải dữ liệu',
+                                barrierDismissible: false
+                            );
+                            Room? room = await RoomRepository().getRoomInformation();
+                            RoomStatus? roomStatus = await RoomRepository().getRoomStatusInformation();
+                            RoomAll roomAll = RoomAll(room!, roomStatus!);
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, Routes.roomManageMainScreen, arguments: roomAll);
+                          }
+                      ),
+                      HomeMainButtonWidget(
                         icon: Icons.logout,
                         text: "Đăng xuất",
                         function: () async {

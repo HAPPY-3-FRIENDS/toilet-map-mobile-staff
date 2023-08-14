@@ -35,4 +35,33 @@ class ToiletRepository {
       return null;
     }
   }
+
+  Future<Toilet?> getNearestToilet() async {
+    Toilet? toilet = await ToiletRepository().getToiletInformation();
+    double lat = toilet!.latitude;
+    double long = toilet!.longitude;
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+    print('Do nearest' + long.toString());
+
+    final response = await http.get(
+      Uri.parse('${AppDomain.appDomain1}/api/toilets/nearest-toilet?current-latitude=${lat}&current-longitude=${long}&vehicle=bike'),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+        HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print('hihi toilets info');
+      final responseJson = jsonDecode(response.body);
+      print(responseJson);
+      BaseResponse baseResponse = BaseResponse.fromJson(responseJson);
+      print(baseResponse.data);
+      Toilet toilet = Toilet.fromJson(baseResponse.data);
+      return toilet;
+    }
+
+    print("Toilets list get failed");
+    return null;
+  }
 }

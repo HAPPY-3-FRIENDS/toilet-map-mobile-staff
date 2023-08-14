@@ -95,4 +95,30 @@ class RoomRepository {
       return null;
     }
   }
+
+  Future<int> postRoomStatusInformation(numberOfRestroom, numberOfBathroom) async {
+    int? accountId = await SharedPreferencesRepository().getAccountId();
+    String? accessToken = await SharedPreferencesRepository().getAccessToken();
+
+    var response = await http.put(
+        Uri.parse("${AppDomain.appDomain1}/api/toilets/update-available-room"),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json; charset=utf-8",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken}",
+        },
+        body:
+        jsonEncode({
+          "toiletId": accountId,
+          "numberOfRestroom": numberOfRestroom,
+          "numberOfBathroom": numberOfBathroom
+        })
+    );
+    print('response ne: ' + response.body);
+    if (response.statusCode == 200) {
+      return 200;
+    } else {
+      print("toilet info get failed");
+      return 0;
+    }
+  }
 }

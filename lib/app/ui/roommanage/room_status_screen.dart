@@ -33,7 +33,7 @@ class _RoomStatusScreenState extends State<RoomStatusScreen> {
     super.initState();
 
     numberOfRestroom = widget.roomStatus.numberOfRestroom - widget.roomStatus.numNotAvailableRestroom;
-    numberOfBathroom = widget.roomStatus.numberOfBathroom - widget.roomStatus.numberOfBathroom;
+    numberOfBathroom = widget.roomStatus.numberOfBathroom - widget.roomStatus.numNotAvailableBathroom;
   }
 
   @override
@@ -201,8 +201,8 @@ class _RoomStatusScreenState extends State<RoomStatusScreen> {
                               TextButton(
                                 child: const Text('Xác nhận'),
                                 onPressed: () async {
-                                  Room? room = await RoomRepository().postRoomInformation(1, 2,3 ,4);
-                                  if (room != null) {
+                                  int room = await RoomRepository().postRoomStatusInformation(widget.roomStatus.numberOfRestroom - numberOfRestroom, widget.roomStatus.numberOfBathroom - numberOfBathroom);
+                                  if (room != 0) {
                                     Navigator.pushNamed(context, Routes.homeMainScreen);
                                     showDialog<void>(
                                       context: context,
