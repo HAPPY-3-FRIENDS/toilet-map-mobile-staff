@@ -15,6 +15,7 @@ import 'package:toiletmap_staff/app/repositories/checkin_repository.dart';
 import 'package:toiletmap_staff/app/repositories/room_repository.dart';
 import 'package:toiletmap_staff/app/repositories/toilet_repository.dart';
 import 'package:toiletmap_staff/app/ui/home/widgets/home_main_button_widget.dart';
+import 'package:toiletmap_staff/app/ui/toilet/toilet_widget.dart';
 import 'package:toiletmap_staff/app/utils/routes.dart';
 import 'package:http/http.dart' as http;
 import 'package:quickalert/models/quickalert_type.dart';
@@ -145,6 +146,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                             Navigator.pushNamed(context, Routes.topupMainScreen)
                           }
                       ),
+                      //Hide for Enterprise
                       HomeMainButtonWidget(
                           icon: Icons.room_preferences,
                           text: "Quản lý phòng",
@@ -172,11 +174,36 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                                 title: 'Đang tải dữ liệu',
                                 barrierDismissible: false
                             );
-                            Room? room = await RoomRepository().getRoomInformation();
-                            RoomStatus? roomStatus = await RoomRepository().getRoomStatusInformation();
-                            RoomAll roomAll = RoomAll(room!, roomStatus!);
+                            Toilet? toilet = await ToiletRepository().getNearestToilet();
                             Navigator.pop(context);
-                            Navigator.pushNamed(context, Routes.roomManageMainScreen, arguments: roomAll);
+                            if (toilet != null) {
+                              showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: ToiletWidget(toilet: toilet!,)
+                                  );
+                                },
+                              );
+                            } else {
+                              showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Chú ý'),
+                                    content: const Text('Không tìm thấy Nhà vệ sinh!'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('Xác nhận'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           }
                       ),
                       HomeMainButtonWidget(

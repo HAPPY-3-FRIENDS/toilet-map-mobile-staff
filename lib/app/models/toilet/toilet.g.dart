@@ -27,8 +27,6 @@ Toilet _$ToiletFromJson(Map<String, dynamic> json) => Toilet(
           .map((e) => e as String)
           .toList(),
       (json['ratingStar'] as num).toDouble(),
-      json['username'] as String,
-      json['status'] as String,
       json['free'] as bool,
     );
 
@@ -49,7 +47,5 @@ Map<String, dynamic> _$ToiletToJson(Toilet instance) => <String, dynamic>{
       'toiletFacilities': instance.toiletFacilities,
       'toiletImageSources': instance.toiletImageSources,
       'ratingStar': instance.ratingStar,
-      'username': instance.username,
-      'status': instance.status,
       'free': instance.free,
     };

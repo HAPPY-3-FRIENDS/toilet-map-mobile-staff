@@ -75,600 +75,602 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
             ),
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.all(20.w),
-          child: FutureBuilder<List<ToiletService>?> (
-              future: ToiletServiceRepository().getToiletService(),
-              builder: (context, snapshot)  {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                      child: CircularProgressIndicator(
-                          color: AppColor.primaryColor1,
-                          strokeWidth: 2.0
-                      )
-                  );
-                }
-                if (snapshot.hasData) {
-                  if (snapshot!.data!.length == 3) {
-                    total = snapshot!.data![0].service.price * peoplenumber1 + snapshot!.data![1].service.price * peoplenumber2 + snapshot!.data![2].service.price * peoplenumber3;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text('Dịch vụ', style: AppText.passerByText1),
-                                  Text('Nhập số lượng (người)', style: AppText.passerByText1),
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Divider(
-                                height: 5,
-                                color: AppColor.primaryColor2,
-                              ),
-                              SizedBox(height: 20.h,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text(snapshot!.data![0].service.name, style: AppText.passerByText1),
-                                  Container(
-                                    height: 35.h,
-                                    width: 120.w,
-                                    child: TextField(
-                                      onSubmitted: (value) => setState(() => peoplenumber1 = int.parse(value)),
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
-                                        hintText: peoplenumber1.toString(),
-                                        hintStyle: AppText.passerByText2,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(4.5.w)
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text(snapshot!.data![1].service.name, style: AppText.passerByText1),
-                                  Container(
-                                    height: 35.h,
-                                    width: 120.w,
-                                    child: TextField(
-                                      onSubmitted: (value) => setState(() => peoplenumber2 = int.parse(value)),
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
-                                        hintText: peoplenumber2.toString(),
-                                        hintStyle: AppText.passerByText2,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(4.5.w)
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text(snapshot!.data![2].service.name, style: AppText.passerByText1),
-                                  Container(
-                                    height: 35.h,
-                                    width: 120.w,
-                                    child: TextField(
-                                      onSubmitted: (value) => setState(() => peoplenumber3 = int.parse(value)),
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
-                                        hintText: peoplenumber3.toString(),
-                                        hintStyle: AppText.passerByText2,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(4.5.w)
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Divider(
-                                height: 5,
-                                color: AppColor.primaryColor2,
-                              ),
-                              SizedBox(height: 20.h,),
-                              Table(
-                                border: TableBorder.all(),
-                                columnWidths: {
-                                  0: FractionColumnWidth(0.4),
-                                  1: FractionColumnWidth(0.2),
-                                  2: FractionColumnWidth(0.2),
-                                  3: FractionColumnWidth(0.2),
-                                },
-                                children: [
-                                  buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
-                                  buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
-                                  buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
-                                  buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                                  //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                                ],
-                              ),
-                              SizedBox(height: 40.h,),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.w),
-                            child: Column(
-                              children: [
-                                Padding(padding: EdgeInsets.symmetric(horizontal: 10.w),child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Tổng tiền", style: AppText.passerByText1,),
-                                    Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: AppText.passerByText1),
-                                  ],
-                                ),),
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 60.h,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: AppColor.primaryColor1,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10.r))),
-                                      onPressed: () async {
-                                        showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            builder: (BuildContext builderContext) {
-                                              return FutureBuilder<UserInfo?> (
-                                                  future: CheckinRepository().postCheckinsThreeServices(
-                                                      snapshot!.data![0].service.name, peoplenumber1, snapshot!.data![1].service.name, peoplenumber2, snapshot!.data![2].service.name, peoplenumber3
-                                                  ),
-                                                  builder: (context, snapshot)  {
-                                                    if (snapshot.connectionState == ConnectionState.waiting) {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Đang xử lý'),
-                                                        content: SingleChildScrollView(
-                                                            child: Center(
-                                                              child: CircularProgressIndicator(
-                                                                  color: AppColor.primaryColor1,
-                                                                  strokeWidth: 2.0
-                                                              ),
-                                                            )
-                                                        ),
-                                                      );
-                                                    }
-
-                                                    if (snapshot.hasData) {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Khách vãng lai'),
-                                                        content: SingleChildScrollView(
-                                                          child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Xác nhận'),
-                                                            onPressed: () {
-                                                              Navigator.pushNamed(context, Routes.homeMainScreen);
-                                                            },
-                                                          ),
-                                                        ],
-                                                      );
-                                                    } else {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Lỗi'),
-                                                        content: SingleChildScrollView(
-                                                          child: Text('Đã xảy ra lỗi!'),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Xác nhận'),
-                                                            onPressed: () {
-                                                              Navigator.of(context).pop();
-                                                            },
-                                                          ),
-                                                        ],
-                                                      );
-                                                    }
-                                                  });
-                                            });
-                                      },
-                                      child: Text((total == 0) ? "Xác nhận thu tiền" : "Xác nhận thu tiền - " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: TextStyle(color: Colors.white),)
-                                  ),
-                                ),
-                              ],
-                            )
-                        ),
-                      ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(20.w),
+            child: FutureBuilder<List<ToiletService>?> (
+                future: ToiletServiceRepository().getToiletService(),
+                builder: (context, snapshot)  {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                            color: AppColor.primaryColor1,
+                            strokeWidth: 2.0
+                        )
                     );
                   }
-                  if (snapshot!.data!.length == 2) {
-                    total = snapshot!.data![0].service.price * peoplenumber1 + snapshot!.data![1].service.price * peoplenumber2;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text('Dịch vụ', style: AppText.passerByText1),
-                                  Text('Nhập số lượng (người)', style: AppText.passerByText1),
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Divider(
-                                height: 5,
-                                color: AppColor.primaryColor2,
-                              ),
-                              SizedBox(height: 20.h,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text(snapshot!.data![0].service.name, style: AppText.passerByText1),
-                                  Container(
-                                    height: 35.h,
-                                    width: 120.w,
-                                    child: TextField(
-                                      onSubmitted: (value) => setState(() => peoplenumber1 = int.parse(value)),
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
-                                        hintText: peoplenumber1.toString(),
-                                        hintStyle: AppText.passerByText2,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(4.5.w)
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text(snapshot!.data![1].service.name, style: AppText.passerByText1),
-                                  Container(
-                                    height: 35.h,
-                                    width: 120.w,
-                                    child: TextField(
-                                      onSubmitted: (value) => setState(() => peoplenumber2 = int.parse(value)),
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
-                                        hintText: peoplenumber2.toString(),
-                                        hintStyle: AppText.passerByText2,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(4.5.w)
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Divider(
-                                height: 5,
-                                color: AppColor.primaryColor2,
-                              ),
-                              SizedBox(height: 20.h,),
-                              Table(
-                                border: TableBorder.all(),
-                                columnWidths: {
-                                  0: FractionColumnWidth(0.4),
-                                  1: FractionColumnWidth(0.2),
-                                  2: FractionColumnWidth(0.2),
-                                  3: FractionColumnWidth(0.2),
-                                },
-                                children: [
-                                  buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
-                                  buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
-                                  buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
-                                  buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                                  //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                                ],
-                              ),
-                              SizedBox(height: 40.h,),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.w),
+                  if (snapshot.hasData) {
+                    if (snapshot!.data!.length == 3) {
+                      total = snapshot!.data![0].service.price * peoplenumber1 + snapshot!.data![1].service.price * peoplenumber2 + snapshot!.data![2].service.price * peoplenumber3;
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SingleChildScrollView(
                             child: Column(
                               children: [
-                                Padding(padding: EdgeInsets.symmetric(horizontal: 10.w),child: Row(
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Tổng tiền", style: AppText.passerByText1,),
-                                    Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: AppText.passerByText1),
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text('Dịch vụ', style: AppText.passerByText1),
+                                    Text('Nhập số lượng (người)', style: AppText.passerByText1),
                                   ],
-                                ),),
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 60.h,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: AppColor.primaryColor1,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10.r))),
-                                      onPressed: () async {
-                                        showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            builder: (BuildContext builderContext) {
-                                              return FutureBuilder<UserInfo?> (
-                                                  future: CheckinRepository().postCheckinsTwoServices(
-                                                      snapshot!.data![0].service.name, peoplenumber1, snapshot!.data![1].service.name, peoplenumber2
-                                                  ),
-                                                  builder: (context, snapshot)  {
-                                                    if (snapshot.connectionState == ConnectionState.waiting) {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Đang xử lý'),
-                                                        content: SingleChildScrollView(
-                                                            child: Center(
-                                                              child: CircularProgressIndicator(
-                                                                  color: AppColor.primaryColor1,
-                                                                  strokeWidth: 2.0
-                                                              ),
-                                                            )
-                                                        ),
-                                                      );
-                                                    }
-
-                                                    if (snapshot.hasData) {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Khách vãng lai'),
-                                                        content: SingleChildScrollView(
-                                                          child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Xác nhận'),
-                                                            onPressed: () {
-                                                              Navigator.pushNamed(context, Routes.homeMainScreen);
-                                                            },
-                                                          ),
-                                                        ],
-                                                      );
-                                                    } else {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Lỗi'),
-                                                        content: SingleChildScrollView(
-                                                          child: Text('Đã xảy ra lỗi!'),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Xác nhận'),
-                                                            onPressed: () {
-                                                              Navigator.of(context).pop();
-                                                            },
-                                                          ),
-                                                        ],
-                                                      );
-                                                    }
-                                                  });
-                                            });
-                                      },
-                                      child: Text((total == 0) ? "Xác nhận thu tiền" : "Xác nhận thu tiền - " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: TextStyle(color: Colors.white),)
-                                  ),
                                 ),
-                              ],
-                            )
-                        ),
-                      ],
-                    );
-                  }
-                  if (snapshot!.data!.length == 1) {
-                    total = snapshot!.data![0].service.price * peoplenumber1;
-
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text('Dịch vụ', style: AppText.passerByText1),
-                                  Text('Nhập số lượng (người)', style: AppText.passerByText1),
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Divider(
-                                height: 5,
-                                color: AppColor.primaryColor2,
-                              ),
-                              SizedBox(height: 20.h,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
-                                  Text(snapshot!.data![0].service.name, style: AppText.passerByText1),
-                                  Container(
-                                    height: 35.h,
-                                    width: 120.w,
-                                    child: TextField(
-                                      onSubmitted: (value) => setState(() => peoplenumber1 = int.parse(value)),
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
-                                        hintText: peoplenumber1.toString(),
-                                        hintStyle: AppText.passerByText2,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(4.5.w)
+                                SizedBox(height: 20.h,),
+                                Divider(
+                                  height: 5,
+                                  color: AppColor.primaryColor2,
+                                ),
+                                SizedBox(height: 20.h,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text(snapshot!.data![0].service.name, style: AppText.passerByText1),
+                                    Container(
+                                      height: 35.h,
+                                      width: 120.w,
+                                      child: TextField(
+                                        onSubmitted: (value) => setState(() => peoplenumber1 = int.parse(value)),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
+                                          hintText: peoplenumber1.toString(),
+                                          hintStyle: AppText.passerByText2,
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(4.5.w)
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 20.h,),
-                              Divider(
-                                height: 5,
-                                color: AppColor.primaryColor2,
-                              ),
-                              SizedBox(height: 20.h,),
-                              Table(
-                                border: TableBorder.all(),
-                                columnWidths: {
-                                  0: FractionColumnWidth(0.4),
-                                  1: FractionColumnWidth(0.2),
-                                  2: FractionColumnWidth(0.2),
-                                  3: FractionColumnWidth(0.2),
-                                },
-                                children: [
-                                  buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
-                                  buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
-                                  buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
-                                  buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                                  //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                                ],
-                              ),
-                              SizedBox(height: 40.h,),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.w),
-                            child: Column(
-                              children: [
-                                Padding(padding: EdgeInsets.symmetric(horizontal: 10.w),child: Row(
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 20.h,),
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Tổng tiền", style: AppText.passerByText1,),
-                                    Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: AppText.passerByText1),
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text(snapshot!.data![1].service.name, style: AppText.passerByText1),
+                                    Container(
+                                      height: 35.h,
+                                      width: 120.w,
+                                      child: TextField(
+                                        onSubmitted: (value) => setState(() => peoplenumber2 = int.parse(value)),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
+                                          hintText: peoplenumber2.toString(),
+                                          hintStyle: AppText.passerByText2,
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(4.5.w)
+                                          ),
+                                        ),
+                                      ),
+                                    )
                                   ],
-                                ),),
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 60.h,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: AppColor.primaryColor1,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10.r))),
-                                      onPressed: () async {
-                                        showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            builder: (BuildContext builderContext) {
-                                              return FutureBuilder<UserInfo?> (
-                                                  future: CheckinRepository().postCheckinsOneService(
-                                                      snapshot!.data![0].service.name, peoplenumber1
-                                                  ),
-                                                  builder: (context, snapshot)  {
-                                                    if (snapshot.connectionState == ConnectionState.waiting) {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Đang xử lý'),
-                                                        content: SingleChildScrollView(
-                                                            child: Center(
-                                                              child: CircularProgressIndicator(
-                                                                  color: AppColor.primaryColor1,
-                                                                  strokeWidth: 2.0
-                                                              ),
-                                                            )
-                                                        ),
-                                                      );
-                                                    }
-
-                                                    if (snapshot.hasData) {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Khách vãng lai'),
-                                                        content: SingleChildScrollView(
-                                                          child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Xác nhận'),
-                                                            onPressed: () {
-                                                              Navigator.pushNamed(context, Routes.homeMainScreen);
-                                                            },
-                                                          ),
-                                                        ],
-                                                      );
-                                                    } else {
-                                                      return AlertDialog(
-                                                        backgroundColor: Colors.white,
-                                                        title: Text('Lỗi'),
-                                                        content: SingleChildScrollView(
-                                                          child: Text('Đã xảy ra lỗi!'),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Xác nhận'),
-                                                            onPressed: () {
-                                                              Navigator.of(context).pop();
-                                                            },
-                                                          ),
-                                                        ],
-                                                      );
-                                                    }
-                                                  });
-                                            });
-                                      },
-                                      child: Text((total == 0) ? "Xác nhận thu tiền" : "Xác nhận thu tiền - " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: TextStyle(color: Colors.white),)
-                                  ),
                                 ),
+                                SizedBox(height: 20.h,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text(snapshot!.data![2].service.name, style: AppText.passerByText1),
+                                    Container(
+                                      height: 35.h,
+                                      width: 120.w,
+                                      child: TextField(
+                                        onSubmitted: (value) => setState(() => peoplenumber3 = int.parse(value)),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
+                                          hintText: peoplenumber3.toString(),
+                                          hintStyle: AppText.passerByText2,
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(4.5.w)
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 20.h,),
+                                Divider(
+                                  height: 5,
+                                  color: AppColor.primaryColor2,
+                                ),
+                                SizedBox(height: 20.h,),
+                                Table(
+                                  border: TableBorder.all(),
+                                  columnWidths: {
+                                    0: FractionColumnWidth(0.4),
+                                    1: FractionColumnWidth(0.2),
+                                    2: FractionColumnWidth(0.2),
+                                    3: FractionColumnWidth(0.2),
+                                  },
+                                  children: [
+                                    buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
+                                    buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
+                                    buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
+                                    buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
+                                    //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
+                                  ],
+                                ),
+                                SizedBox(height: 40.h,),
                               ],
-                            )
-                        ),
-                      ],
-                    );
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.w),
+                              child: Column(
+                                children: [
+                                  Padding(padding: EdgeInsets.symmetric(horizontal: 10.w),child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Tổng tiền", style: AppText.passerByText1,),
+                                      Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: AppText.passerByText1),
+                                    ],
+                                  ),),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 60.h,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            primary: AppColor.primaryColor1,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10.r))),
+                                        onPressed: () async {
+                                          showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (BuildContext builderContext) {
+                                                return FutureBuilder<UserInfo?> (
+                                                    future: CheckinRepository().postCheckinsThreeServices(
+                                                        snapshot!.data![0].service.name, peoplenumber1, snapshot!.data![1].service.name, peoplenumber2, snapshot!.data![2].service.name, peoplenumber3
+                                                    ),
+                                                    builder: (context, snapshot)  {
+                                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Đang xử lý'),
+                                                          content: SingleChildScrollView(
+                                                              child: Center(
+                                                                child: CircularProgressIndicator(
+                                                                    color: AppColor.primaryColor1,
+                                                                    strokeWidth: 2.0
+                                                                ),
+                                                              )
+                                                          ),
+                                                        );
+                                                      }
+
+                                                      if (snapshot.hasData) {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Khách vãng lai'),
+                                                          content: SingleChildScrollView(
+                                                            child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
+                                                          ),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text('Xác nhận'),
+                                                              onPressed: () {
+                                                                Navigator.pushNamed(context, Routes.homeMainScreen);
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      } else {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Lỗi'),
+                                                          content: SingleChildScrollView(
+                                                            child: Text('Đã xảy ra lỗi!'),
+                                                          ),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text('Xác nhận'),
+                                                              onPressed: () {
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      }
+                                                    });
+                                              });
+                                        },
+                                        child: Text((total == 0) ? "Xác nhận thu tiền" : "Xác nhận thu tiền - " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: TextStyle(color: Colors.white),)
+                                    ),
+                                  ),
+                                ],
+                              )
+                          ),
+                        ],
+                      );
+                    }
+                    if (snapshot!.data!.length == 2) {
+                      total = snapshot!.data![0].service.price * peoplenumber1 + snapshot!.data![1].service.price * peoplenumber2;
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text('Dịch vụ', style: AppText.passerByText1),
+                                    Text('Nhập số lượng (người)', style: AppText.passerByText1),
+                                  ],
+                                ),
+                                SizedBox(height: 20.h,),
+                                Divider(
+                                  height: 5,
+                                  color: AppColor.primaryColor2,
+                                ),
+                                SizedBox(height: 20.h,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text(snapshot!.data![0].service.name, style: AppText.passerByText1),
+                                    Container(
+                                      height: 35.h,
+                                      width: 120.w,
+                                      child: TextField(
+                                        onSubmitted: (value) => setState(() => peoplenumber1 = int.parse(value)),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
+                                          hintText: peoplenumber1.toString(),
+                                          hintStyle: AppText.passerByText2,
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(4.5.w)
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 20.h,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text(snapshot!.data![1].service.name, style: AppText.passerByText1),
+                                    Container(
+                                      height: 35.h,
+                                      width: 120.w,
+                                      child: TextField(
+                                        onSubmitted: (value) => setState(() => peoplenumber2 = int.parse(value)),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
+                                          hintText: peoplenumber2.toString(),
+                                          hintStyle: AppText.passerByText2,
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(4.5.w)
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 20.h,),
+                                Divider(
+                                  height: 5,
+                                  color: AppColor.primaryColor2,
+                                ),
+                                SizedBox(height: 20.h,),
+                                Table(
+                                  border: TableBorder.all(),
+                                  columnWidths: {
+                                    0: FractionColumnWidth(0.4),
+                                    1: FractionColumnWidth(0.2),
+                                    2: FractionColumnWidth(0.2),
+                                    3: FractionColumnWidth(0.2),
+                                  },
+                                  children: [
+                                    buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
+                                    buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
+                                    buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
+                                    buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
+                                    //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
+                                  ],
+                                ),
+                                SizedBox(height: 40.h,),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.w),
+                              child: Column(
+                                children: [
+                                  Padding(padding: EdgeInsets.symmetric(horizontal: 10.w),child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Tổng tiền", style: AppText.passerByText1,),
+                                      Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: AppText.passerByText1),
+                                    ],
+                                  ),),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 60.h,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            primary: AppColor.primaryColor1,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10.r))),
+                                        onPressed: () async {
+                                          showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (BuildContext builderContext) {
+                                                return FutureBuilder<UserInfo?> (
+                                                    future: CheckinRepository().postCheckinsTwoServices(
+                                                        snapshot!.data![0].service.name, peoplenumber1, snapshot!.data![1].service.name, peoplenumber2
+                                                    ),
+                                                    builder: (context, snapshot)  {
+                                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Đang xử lý'),
+                                                          content: SingleChildScrollView(
+                                                              child: Center(
+                                                                child: CircularProgressIndicator(
+                                                                    color: AppColor.primaryColor1,
+                                                                    strokeWidth: 2.0
+                                                                ),
+                                                              )
+                                                          ),
+                                                        );
+                                                      }
+
+                                                      if (snapshot.hasData) {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Khách vãng lai'),
+                                                          content: SingleChildScrollView(
+                                                            child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
+                                                          ),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text('Xác nhận'),
+                                                              onPressed: () {
+                                                                Navigator.pushNamed(context, Routes.homeMainScreen);
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      } else {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Lỗi'),
+                                                          content: SingleChildScrollView(
+                                                            child: Text('Đã xảy ra lỗi!'),
+                                                          ),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text('Xác nhận'),
+                                                              onPressed: () {
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      }
+                                                    });
+                                              });
+                                        },
+                                        child: Text((total == 0) ? "Xác nhận thu tiền" : "Xác nhận thu tiền - " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: TextStyle(color: Colors.white),)
+                                    ),
+                                  ),
+                                ],
+                              )
+                          ),
+                        ],
+                      );
+                    }
+                    if (snapshot!.data!.length == 1) {
+                      total = snapshot!.data![0].service.price * peoplenumber1;
+
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text('Dịch vụ', style: AppText.passerByText1),
+                                    Text('Nhập số lượng (người)', style: AppText.passerByText1),
+                                  ],
+                                ),
+                                SizedBox(height: 20.h,),
+                                Divider(
+                                  height: 5,
+                                  color: AppColor.primaryColor2,
+                                ),
+                                SizedBox(height: 20.h,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    Text(snapshot!.data![0].service.name, style: AppText.passerByText1),
+                                    Container(
+                                      height: 35.h,
+                                      width: 120.w,
+                                      child: TextField(
+                                        onSubmitted: (value) => setState(() => peoplenumber1 = int.parse(value)),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0),
+                                          hintText: peoplenumber1.toString(),
+                                          hintStyle: AppText.passerByText2,
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(4.5.w)
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 20.h,),
+                                Divider(
+                                  height: 5,
+                                  color: AppColor.primaryColor2,
+                                ),
+                                SizedBox(height: 20.h,),
+                                Table(
+                                  border: TableBorder.all(),
+                                  columnWidths: {
+                                    0: FractionColumnWidth(0.4),
+                                    1: FractionColumnWidth(0.2),
+                                    2: FractionColumnWidth(0.2),
+                                    3: FractionColumnWidth(0.2),
+                                  },
+                                  children: [
+                                    buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
+                                    buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
+                                    buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
+                                    buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
+                                    //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
+                                  ],
+                                ),
+                                SizedBox(height: 40.h,),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.w),
+                              child: Column(
+                                children: [
+                                  Padding(padding: EdgeInsets.symmetric(horizontal: 10.w),child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Tổng tiền", style: AppText.passerByText1,),
+                                      Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: AppText.passerByText1),
+                                    ],
+                                  ),),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 60.h,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            primary: AppColor.primaryColor1,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10.r))),
+                                        onPressed: () async {
+                                          showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (BuildContext builderContext) {
+                                                return FutureBuilder<UserInfo?> (
+                                                    future: CheckinRepository().postCheckinsOneService(
+                                                        snapshot!.data![0].service.name, peoplenumber1
+                                                    ),
+                                                    builder: (context, snapshot)  {
+                                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Đang xử lý'),
+                                                          content: SingleChildScrollView(
+                                                              child: Center(
+                                                                child: CircularProgressIndicator(
+                                                                    color: AppColor.primaryColor1,
+                                                                    strokeWidth: 2.0
+                                                                ),
+                                                              )
+                                                          ),
+                                                        );
+                                                      }
+
+                                                      if (snapshot.hasData) {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Khách vãng lai'),
+                                                          content: SingleChildScrollView(
+                                                            child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
+                                                          ),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text('Xác nhận'),
+                                                              onPressed: () {
+                                                                Navigator.pushNamed(context, Routes.homeMainScreen);
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      } else {
+                                                        return AlertDialog(
+                                                          backgroundColor: Colors.white,
+                                                          title: Text('Lỗi'),
+                                                          content: SingleChildScrollView(
+                                                            child: Text('Đã xảy ra lỗi!'),
+                                                          ),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text('Xác nhận'),
+                                                              onPressed: () {
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      }
+                                                    });
+                                              });
+                                        },
+                                        child: Text((total == 0) ? "Xác nhận thu tiền" : "Xác nhận thu tiền - " + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ", style: TextStyle(color: Colors.white),)
+                                    ),
+                                  ),
+                                ],
+                              )
+                          ),
+                        ],
+                      );
+                    }
                   }
-                }
-                return Center(child: Text('Lỗi'));
-              }),
+                  return Center(child: Text('Lỗi'));
+                }),
+          ),
         )
       ),
     );
