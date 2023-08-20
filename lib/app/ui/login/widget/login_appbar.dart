@@ -14,6 +14,7 @@ class LoginAppbar extends StatelessWidget {
         AppBar(
           toolbarHeight: 225.h,
           shape: AppShapeBorder.shapeBorder1,
+          automaticallyImplyLeading: false,
           flexibleSpace: Container(
               decoration: AppBoxDecoration.boxDecorationWithGradient1
           ),

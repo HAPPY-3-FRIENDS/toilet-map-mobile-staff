@@ -32,109 +32,113 @@ class _LoginMainScreenState extends State<LoginMainScreen> {
     return SafeArea(
         top: true,
         bottom: true,
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                LoginAppbar(),
-                Padding(
-                  padding: EdgeInsets.all(20.w),
-                  child: buildUsername(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(20.w),
-                  child: buildPassword(),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(20.w),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 60.h,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: AppColor.primaryColor1,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.r))),
-                        onPressed: () async {
-                          try {
-                            if (usernameController.text.isEmpty || password.isEmpty) {
-                              showDialog<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Chú ý'),
-                                    content: const Text('Vui lòng nhập đủ thông tin!'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Xác nhận'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
+        child: WillPopScope(
+          onWillPop: () async => false,
+          child: Scaffold(
+              body: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    LoginAppbar(),
+                    Padding(
+                      padding: EdgeInsets.all(20.w),
+                      child: buildUsername(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(20.w),
+                      child: buildPassword(),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(20.w),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 60.h,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: AppColor.primaryColor1,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.r))),
+                            onPressed: () async {
+                              try {
+                                if (usernameController.text.isEmpty || password.isEmpty) {
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Chú ý'),
+                                        content: const Text('Vui lòng nhập đủ thông tin!'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text('Xác nhận'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
                                   );
-                                },
-                              );
-                            } else {
-                              AccessToken? accessToken = await AuthRepository().authLogin(usernameController.text, password);
-                              if (accessToken != null ) {
-                                Navigator.pushNamed(context, Routes.homeMainScreen);
-                              } else {
-                                throw Exception();
-                              }
-                            }
-                          } catch (e) {
-                            print(e);
+                                } else {
+                                  AccessToken? accessToken = await AuthRepository().authLogin(usernameController.text, password);
+                                  if (accessToken != null ) {
+                                    Navigator.pushNamed(context, Routes.homeMainScreen);
+                                  } else {
+                                    throw Exception();
+                                  }
+                                }
+                              } catch (e) {
+                                print(e);
 
-                            showDialog<void>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Chú ý'),
-                                  content: const Text('Đã có lỗi xảy ra!'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text('Xác nhận'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
+                                showDialog<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Chú ý'),
+                                      content: const Text('Đã có lỗi xảy ra!'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Xác nhận'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          }
-                        },
-                        child: Text("Đăng nhập", style: TextStyle(color: Colors.white),)
+                              }
+                            },
+                            child: Text("Đăng nhập", style: TextStyle(color: Colors.white),)
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(20.w),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 60.h,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.r))),
-                        onPressed: () async {
-                          Navigator.pushNamed(context, Routes.configScreen);
-                        },
-                        child: Text("Đăng nhập", style: TextStyle(color: Colors.transparent),)
+                    Padding(
+                      padding: EdgeInsets.all(20.w),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 60.h,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.r))),
+                            onPressed: () async {
+                              Navigator.pushNamed(context, Routes.configScreen);
+                            },
+                            child: Text("Đăng nhập", style: TextStyle(color: Colors.transparent),)
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          )
-        ));
+              )
+          ),
+        )
+    );
   }
 
   Widget buildUsername() => TextField(
