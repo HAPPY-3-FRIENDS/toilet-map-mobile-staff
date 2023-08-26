@@ -121,7 +121,7 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
                                       if (snapshot!.data!.accountId == 0) {
                                         return AlertDialog(
                                           backgroundColor: Colors.white,
-                                          title: Text('Lỗi'),
+                                          title: Text('Check-in thất bại!'),
                                           content: SingleChildScrollView(
                                             child: Text(snapshot!.data!.fullName!),
                                           ),

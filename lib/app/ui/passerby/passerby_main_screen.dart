@@ -266,21 +266,39 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                                       }
 
                                                       if (snapshot.hasData) {
-                                                        return AlertDialog(
-                                                          backgroundColor: Colors.white,
-                                                          title: Text('Khách vãng lai'),
-                                                          content: SingleChildScrollView(
-                                                            child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
-                                                          ),
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              child: const Text('Xác nhận'),
-                                                              onPressed: () {
-                                                                Navigator.pushNamed(context, Routes.homeMainScreen);
-                                                              },
+                                                        if (snapshot.data!.fullName == "Khách vãng lai") {
+                                                          return AlertDialog(
+                                                            backgroundColor: Colors.white,
+                                                            title: Text('Khách vãng lai'),
+                                                            content: SingleChildScrollView(
+                                                              child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
                                                             ),
-                                                          ],
-                                                        );
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: const Text('Xác nhận'),
+                                                                onPressed: () {
+                                                                  Navigator.pushNamed(context, Routes.homeMainScreen);
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        } else {
+                                                          return AlertDialog(
+                                                            backgroundColor: Colors.white,
+                                                            title: Text('Check-in thất bại!'),
+                                                            content: SingleChildScrollView(
+                                                              child: Text(snapshot.data!.fullName!),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: const Text('Xác nhận'),
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        }
                                                       } else {
                                                         return AlertDialog(
                                                           backgroundColor: Colors.white,
@@ -321,7 +339,8 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    //Text(NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
+                                    //Text(NumberFormat.cur
+                                    // rency(locale: "en_US", decimalDigits: 0, symbol: "").format(10000) + " VNĐ", style: AppText.passerByText1,),
                                     Text('Dịch vụ', style: AppText.passerByText1),
                                     Text('Nhập số lượng (người)', style: AppText.passerByText1),
                                   ],
@@ -405,8 +424,6 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                     buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
                                     buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
                                     buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
-                                    buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
-                                    //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
                                   ],
                                 ),
                                 SizedBox(height: 40.h,),
@@ -458,21 +475,39 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                                       }
 
                                                       if (snapshot.hasData) {
-                                                        return AlertDialog(
-                                                          backgroundColor: Colors.white,
-                                                          title: Text('Khách vãng lai'),
-                                                          content: SingleChildScrollView(
-                                                            child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
-                                                          ),
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              child: const Text('Xác nhận'),
-                                                              onPressed: () {
-                                                                Navigator.pushNamed(context, Routes.homeMainScreen);
-                                                              },
+                                                        if (snapshot.data!.fullName == "Khách vãng lai") {
+                                                          return AlertDialog(
+                                                            backgroundColor: Colors.white,
+                                                            title: Text('Khách vãng lai'),
+                                                            content: SingleChildScrollView(
+                                                              child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
                                                             ),
-                                                          ],
-                                                        );
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: const Text('Xác nhận'),
+                                                                onPressed: () {
+                                                                  Navigator.pushNamed(context, Routes.homeMainScreen);
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        } else {
+                                                          return AlertDialog(
+                                                            backgroundColor: Colors.white,
+                                                            title: Text('Check-in thất bại!'),
+                                                            content: SingleChildScrollView(
+                                                              child: Text(snapshot.data!.fullName!),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: const Text('Xác nhận'),
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        }
                                                       } else {
                                                         return AlertDialog(
                                                           backgroundColor: Colors.white,
@@ -569,8 +604,6 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                   children: [
                                     buildRow(['Dịch vụ', 'Đơn giá (VNĐ)', 'Số người', 'Thành tiền (VNĐ)'], isHeader: true),
                                     buildRow([snapshot!.data![0].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price), peoplenumber1.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![0].service.price * peoplenumber1)]),
-                                    buildRow([snapshot!.data![1].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price), peoplenumber2.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![1].service.price * peoplenumber2)]),
-                                    buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
                                     //buildRow([snapshot!.data![2].service.name, NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price), peoplenumber3.toString(), NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(snapshot!.data![2].service.price * peoplenumber3)]),
                                   ],
                                 ),
@@ -623,21 +656,39 @@ class _PasserbyMainScreenState extends State<PasserbyMainScreen> {
                                                       }
 
                                                       if (snapshot.hasData) {
-                                                        return AlertDialog(
-                                                          backgroundColor: Colors.white,
-                                                          title: Text('Khách vãng lai'),
-                                                          content: SingleChildScrollView(
-                                                            child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
-                                                          ),
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              child: const Text('Xác nhận'),
-                                                              onPressed: () {
-                                                                Navigator.pushNamed(context, Routes.homeMainScreen);
-                                                              },
+                                                        if (snapshot.data!.fullName == "Khách vãng lai") {
+                                                          return AlertDialog(
+                                                            backgroundColor: Colors.white,
+                                                            title: Text('Khách vãng lai'),
+                                                            content: SingleChildScrollView(
+                                                              child: Text('Đã thu: ' + NumberFormat.currency(locale: "en_US", decimalDigits: 0, symbol: "").format(total) + " VNĐ"),
                                                             ),
-                                                          ],
-                                                        );
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: const Text('Xác nhận'),
+                                                                onPressed: () {
+                                                                  Navigator.pushNamed(context, Routes.homeMainScreen);
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        } else {
+                                                          return AlertDialog(
+                                                            backgroundColor: Colors.white,
+                                                            title: Text('Check-in thất bại!'),
+                                                            content: SingleChildScrollView(
+                                                              child: Text(snapshot.data!.fullName!),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: const Text('Xác nhận'),
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        }
                                                       } else {
                                                         return AlertDialog(
                                                           backgroundColor: Colors.white,
