@@ -89,7 +89,7 @@ class _RoomStatusScreenState extends State<RoomStatusScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           IconButton(onPressed: () {
-                            if (numberOfRestroom > 0) {
+                            if (numberOfRestroom > widget.roomStatus.numberOfRestroom-widget.roomStatus.numNotAvailableRestroom) {
                               setState(() {
                                 numberOfRestroom--;
                               });
@@ -138,7 +138,7 @@ class _RoomStatusScreenState extends State<RoomStatusScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           IconButton(onPressed: () {
-                            if (numberOfBathroom > 0) {
+                            if (numberOfBathroom > widget.roomStatus.numberOfBathroom-widget.roomStatus.numNotAvailableBathroom) {
                               setState(() {
                                 numberOfBathroom--;
                               });

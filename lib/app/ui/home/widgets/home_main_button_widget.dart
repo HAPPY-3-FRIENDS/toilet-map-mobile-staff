@@ -27,7 +27,7 @@ class HomeMainButtonWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(icon,size: 80.w, color: AppColor.primaryColor1),
+            Icon(icon,size: 70.w, color: AppColor.primaryColor1),
             Text(text, style: AppText.homeButtonText,)
           ],
         ),

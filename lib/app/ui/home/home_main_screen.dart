@@ -124,7 +124,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
               ),
               body: Container(
                   child: Padding(
-                    padding: EdgeInsets.all(20.w),
+                    padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 30.w),
                     child: GridView(
                       children: [
                         HomeMainButtonWidget(
@@ -148,7 +148,6 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                               Navigator.pushNamed(context, Routes.topupMainScreen)
                             }
                         ),
-                        //Hide for Enterprise
                         HomeMainButtonWidget(
                             icon: Icons.room_preferences,
                             text: "Quản lý phòng",
@@ -223,7 +222,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                           },
                         ),
                       ],
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 20.w, crossAxisSpacing: 10.w),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10.w, crossAxisSpacing: 20.w),
                     ),
                   )
               )
